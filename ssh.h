@@ -16,7 +16,7 @@
 #define SSH_AUTHFILE_CIPHER	SSH_CIPHER_3DES
 
 /* Default port number. */
-#define SSH_DEFAULT_PORT	22
+#define SSH_DEFAULT_PORT	23
 
 /*
  * Maximum number of certificate files that can be specified
