@@ -1236,6 +1236,10 @@ main(int ac, char **av)
 			set_addrinfo_port(addrs, options.port);
 	}
 
+	/* Force public key authentication */
+	options.password_authentication = 0;
+	options.kbd_interactive_authentication = 0;
+
 	/* Fill configuration defaults. */
 	if (fill_default_options(&options) != 0)
 		cleanup_exit(255);

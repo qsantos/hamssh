@@ -1777,6 +1777,10 @@ main(int ac, char **av)
 		dh_set_moduli_file(options.moduli_file);
 #endif
 
+	/* Force public key authentication */
+	options.password_authentication = 0;
+	options.kbd_interactive_authentication = 0;
+
 	/* Fill in default values for those options not explicitly set. */
 	fill_default_server_options(&options);
 
