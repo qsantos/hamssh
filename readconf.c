@@ -510,14 +510,7 @@ add_identity_file(Options *options, const char *dir, const char *filename,
 int
 default_ssh_port(void)
 {
-	static int port;
-	struct servent *sp;
-
-	if (port == 0) {
-		sp = getservbyname(SSH_SERVICE_NAME, "tcp");
-		port = sp ? ntohs(sp->s_port) : SSH_DEFAULT_PORT;
-	}
-	return port;
+	return 23;
 }
 
 /*
