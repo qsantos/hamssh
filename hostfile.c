@@ -469,7 +469,7 @@ write_host_entry(FILE *f, const char *host, const char *ip,
 }
 
 /*
- * Create user ~/.ssh directory if it doesn't exist and we want to write to it.
+ * Create user ~/.hamssh directory if it doesn't exist and we want to write to it.
  * If notify is set, a message will be emitted if the directory is created.
  */
 void
@@ -484,7 +484,7 @@ hostfile_create_user_ssh_dir(const char *filename, int notify)
 	len = p - filename;
 	dotsshdir = tilde_expand_filename("~/" _PATH_SSH_USER_DIR, getuid());
 	if (strlen(dotsshdir) > len || strncmp(filename, dotsshdir, len) != 0)
-		goto out; /* not ~/.ssh prefixed */
+		goto out; /* not ~/.hamssh prefixed */
 	if (stat(dotsshdir, &st) == 0)
 		goto out; /* dir already exists */
 	else if (errno != ENOENT)

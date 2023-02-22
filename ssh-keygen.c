@@ -3879,7 +3879,7 @@ main(int argc, char **argv)
 	if (!have_identity)
 		ask_filename(pw, "Enter file in which to save the key");
 
-	/* Create ~/.ssh directory if it doesn't already exist. */
+	/* Create ~/.hamssh directory if it doesn't already exist. */
 	hostfile_create_user_ssh_dir(identity_file, !quiet);
 
 	/* If the file already exists, ask the user to confirm. */

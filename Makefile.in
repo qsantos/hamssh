@@ -164,7 +164,7 @@ CONFIGFILES_IN=hamsshd_config hamssh_config hammoduli
 
 PATHSUBS	= \
 	-e 's|/etc/hamssh/hamssh_config|$(sysconfdir)/hamssh_config|g' \
-	-e 's|/etc/hamssh/hamknown_hosts|$(sysconfdir)/hamknown_hosts|g' \
+	-e 's|/etc/hamssh/hamssh_known_hosts|$(sysconfdir)/hamssh_known_hosts|g' \
 	-e 's|/etc/hamssh/hamsshd_config|$(sysconfdir)/hamsshd_config|g' \
 	-e 's|/usr/libexec|$(libexecdir)|g' \
 	-e 's|/etc/shosts.equiv|$(sysconfdir)/shosts.equiv|g' \
