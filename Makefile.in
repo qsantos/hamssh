@@ -20,12 +20,12 @@ abs_top_builddir=@abs_top_builddir@
 
 DESTDIR=
 VPATH=@srcdir@
-SSH_PROGRAM=@bindir@/ssh
-ASKPASS_PROGRAM=$(libexecdir)/ssh-askpass
-SFTP_SERVER=$(libexecdir)/sftp-server
-SSH_KEYSIGN=$(libexecdir)/ssh-keysign
-SSH_PKCS11_HELPER=$(libexecdir)/ssh-pkcs11-helper
-SSH_SK_HELPER=$(libexecdir)/ssh-sk-helper
+SSH_PROGRAM=@bindir@/hamssh
+ASKPASS_PROGRAM=$(libexecdir)/hamssh-askpass
+SFTP_SERVER=$(libexecdir)/hamsftp-server
+SSH_KEYSIGN=$(libexecdir)/hamssh-keysign
+SSH_PKCS11_HELPER=$(libexecdir)/hamssh-pkcs11-helper
+SSH_SK_HELPER=$(libexecdir)/hamssh-sk-helper
 PRIVSEP_PATH=@PRIVSEP_PATH@
 SSH_PRIVSEP_USER=@SSH_PRIVSEP_USER@
 STRIP_OPT=@STRIP_OPT@
@@ -69,7 +69,7 @@ MKDIR_P=@MKDIR_P@
 
 .SUFFIXES: .lo
 
-TARGETS=ssh$(EXEEXT) sshd$(EXEEXT) ssh-add$(EXEEXT) ssh-keygen$(EXEEXT) ssh-keyscan${EXEEXT} ssh-keysign${EXEEXT} ssh-pkcs11-helper$(EXEEXT) ssh-agent$(EXEEXT) scp$(EXEEXT) sftp-server$(EXEEXT) sftp$(EXEEXT) ssh-sk-helper$(EXEEXT)
+TARGETS=hamssh$(EXEEXT) hamsshd$(EXEEXT) hamssh-add$(EXEEXT) hamssh-keygen$(EXEEXT) hamssh-keyscan${EXEEXT} hamssh-keysign${EXEEXT} hamssh-pkcs11-helper$(EXEEXT) hamssh-agent$(EXEEXT) hamscp$(EXEEXT) hamsftp-server$(EXEEXT) hamsftp$(EXEEXT) hamssh-sk-helper$(EXEEXT)
 
 XMSS_OBJS=\
 	ssh-xmss.o \
@@ -159,24 +159,24 @@ MANPAGES	= moduli.5.out scp.1.out ssh-add.1.out ssh-agent.1.out ssh-keygen.1.out
 MANPAGES_IN	= moduli.5 scp.1 ssh-add.1 ssh-agent.1 ssh-keygen.1 ssh-keyscan.1 ssh.1 sshd.8 sftp-server.8 sftp.1 ssh-keysign.8 ssh-pkcs11-helper.8 ssh-sk-helper.8 sshd_config.5 ssh_config.5
 MANTYPE		= @MANTYPE@
 
-CONFIGFILES=sshd_config.out ssh_config.out moduli.out
-CONFIGFILES_IN=sshd_config ssh_config moduli
+CONFIGFILES=hamsshd_config.out hamssh_config.out hammoduli.out
+CONFIGFILES_IN=hamsshd_config hamssh_config hammoduli
 
 PATHSUBS	= \
-	-e 's|/etc/ssh/ssh_config|$(sysconfdir)/ssh_config|g' \
-	-e 's|/etc/ssh/ssh_known_hosts|$(sysconfdir)/ssh_known_hosts|g' \
-	-e 's|/etc/ssh/sshd_config|$(sysconfdir)/sshd_config|g' \
+	-e 's|/etc/hamssh/hamssh_config|$(sysconfdir)/hamssh_config|g' \
+	-e 's|/etc/hamssh/hamknown_hosts|$(sysconfdir)/hamknown_hosts|g' \
+	-e 's|/etc/hamssh/hamsshd_config|$(sysconfdir)/hamsshd_config|g' \
 	-e 's|/usr/libexec|$(libexecdir)|g' \
 	-e 's|/etc/shosts.equiv|$(sysconfdir)/shosts.equiv|g' \
-	-e 's|/etc/ssh/ssh_host_key|$(sysconfdir)/ssh_host_key|g' \
-	-e 's|/etc/ssh/ssh_host_ecdsa_key|$(sysconfdir)/ssh_host_ecdsa_key|g' \
-	-e 's|/etc/ssh/ssh_host_dsa_key|$(sysconfdir)/ssh_host_dsa_key|g' \
-	-e 's|/etc/ssh/ssh_host_rsa_key|$(sysconfdir)/ssh_host_rsa_key|g' \
-	-e 's|/etc/ssh/ssh_host_ed25519_key|$(sysconfdir)/ssh_host_ed25519_key|g' \
-	-e 's|/var/run/sshd.pid|$(piddir)/sshd.pid|g' \
-	-e 's|/etc/moduli|$(sysconfdir)/moduli|g' \
-	-e 's|/etc/ssh/moduli|$(sysconfdir)/moduli|g' \
-	-e 's|/etc/ssh/sshrc|$(sysconfdir)/sshrc|g' \
+	-e 's|/etc/hamssh/hamssh_host_key|$(sysconfdir)/hamssh_host_key|g' \
+	-e 's|/etc/hamssh/hamssh_host_ecdsa_key|$(sysconfdir)/hamssh_host_ecdsa_key|g' \
+	-e 's|/etc/hamssh/hamssh_host_dsa_key|$(sysconfdir)/hamssh_host_dsa_key|g' \
+	-e 's|/etc/hamssh/hamssh_host_rsa_key|$(sysconfdir)/hamssh_host_rsa_key|g' \
+	-e 's|/etc/hamssh/hamssh_host_ed25519_key|$(sysconfdir)/hamssh_host_ed25519_key|g' \
+	-e 's|/var/run/hamsshd.pid|$(piddir)/hamsshd.pid|g' \
+	-e 's|/etc/hammoduli|$(sysconfdir)/hammoduli|g' \
+	-e 's|/etc/hamssh/hammoduli|$(sysconfdir)/hammoduli|g' \
+	-e 's|/etc/hamssh/hamsshrc|$(sysconfdir)/hamsshrc|g' \
 	-e 's|/usr/X11R6/bin/xauth|$(XAUTH_PATH)|g' \
 	-e 's|/var/empty|$(PRIVSEP_PATH)|g' \
 	-e 's|/usr/bin:/bin:/usr/sbin:/sbin|@user_path@|g'
@@ -199,49 +199,49 @@ $(LIBCOMPAT): always
 	(cd openbsd-compat && $(MAKE))
 always:
 
-libssh.a: $(LIBSSH_OBJS)
+libhamssh.a: $(LIBSSH_OBJS)
 	$(AR) rv $@ $(LIBSSH_OBJS)
 	$(RANLIB) $@
 
-ssh$(EXEEXT): $(LIBCOMPAT) libssh.a $(SSHOBJS)
-	$(LD) -o $@ $(SSHOBJS) $(LDFLAGS) -lssh -lopenbsd-compat $(LIBS) $(GSSLIBS) $(CHANNELLIBS)
+hamssh$(EXEEXT): $(LIBCOMPAT) libhamssh.a $(SSHOBJS)
+	$(LD) -o $@ $(SSHOBJS) $(LDFLAGS) -lhamssh -lopenbsd-compat $(LIBS) $(GSSLIBS) $(CHANNELLIBS)
 
-sshd$(EXEEXT): libssh.a	$(LIBCOMPAT) $(SSHDOBJS)
-	$(LD) -o $@ $(SSHDOBJS) $(LDFLAGS) -lssh -lopenbsd-compat $(SSHDLIBS) $(LIBS) $(GSSLIBS) $(K5LIBS) $(CHANNELLIBS)
+hamsshd$(EXEEXT): libhamssh.a	$(LIBCOMPAT) $(SSHDOBJS)
+	$(LD) -o $@ $(SSHDOBJS) $(LDFLAGS) -lhamssh -lopenbsd-compat $(SSHDLIBS) $(LIBS) $(GSSLIBS) $(K5LIBS) $(CHANNELLIBS)
 
-scp$(EXEEXT): $(LIBCOMPAT) libssh.a $(SCP_OBJS)
-	$(LD) -o $@ $(SCP_OBJS) $(LDFLAGS) -lssh -lopenbsd-compat $(LIBS)
+hamscp$(EXEEXT): $(LIBCOMPAT) libhamssh.a $(SCP_OBJS)
+	$(LD) -o $@ $(SCP_OBJS) $(LDFLAGS) -lhamssh -lopenbsd-compat $(LIBS)
 
-ssh-add$(EXEEXT): $(LIBCOMPAT) libssh.a $(SSHADD_OBJS)
-	$(LD) -o $@ $(SSHADD_OBJS) $(LDFLAGS) -lssh -lopenbsd-compat $(LIBS) $(CHANNELLIBS)
+hamssh-add$(EXEEXT): $(LIBCOMPAT) libhamssh.a $(SSHADD_OBJS)
+	$(LD) -o $@ $(SSHADD_OBJS) $(LDFLAGS) -lhamssh -lopenbsd-compat $(LIBS) $(CHANNELLIBS)
 
-ssh-agent$(EXEEXT): $(LIBCOMPAT) libssh.a $(SSHAGENT_OBJS)
-	$(LD) -o $@ $(SSHAGENT_OBJS) $(LDFLAGS) -lssh -lopenbsd-compat $(LIBS) $(CHANNELLIBS)
+hamssh-agent$(EXEEXT): $(LIBCOMPAT) libhamssh.a $(SSHAGENT_OBJS)
+	$(LD) -o $@ $(SSHAGENT_OBJS) $(LDFLAGS) -lhamssh -lopenbsd-compat $(LIBS) $(CHANNELLIBS)
 
-ssh-keygen$(EXEEXT): $(LIBCOMPAT) libssh.a $(SSHKEYGEN_OBJS)
-	$(LD) -o $@ $(SSHKEYGEN_OBJS) $(LDFLAGS) -lssh -lopenbsd-compat $(LIBS) $(CHANNELLIBS)
+hamssh-keygen$(EXEEXT): $(LIBCOMPAT) libhamssh.a $(SSHKEYGEN_OBJS)
+	$(LD) -o $@ $(SSHKEYGEN_OBJS) $(LDFLAGS) -lhamssh -lopenbsd-compat $(LIBS) $(CHANNELLIBS)
 
-ssh-keysign$(EXEEXT): $(LIBCOMPAT) libssh.a $(SSHKEYSIGN_OBJS)
-	$(LD) -o $@ $(SSHKEYSIGN_OBJS) $(LDFLAGS) -lssh -lopenbsd-compat $(LIBS) $(CHANNELLIBS)
+hamssh-keysign$(EXEEXT): $(LIBCOMPAT) libhamssh.a $(SSHKEYSIGN_OBJS)
+	$(LD) -o $@ $(SSHKEYSIGN_OBJS) $(LDFLAGS) -lhamssh -lopenbsd-compat $(LIBS) $(CHANNELLIBS)
 
-ssh-pkcs11-helper$(EXEEXT): $(LIBCOMPAT) libssh.a $(P11HELPER_OBJS)
-	$(LD) -o $@ $(P11HELPER_OBJS) $(LDFLAGS) -lssh -lopenbsd-compat -lssh -lopenbsd-compat $(LIBS) $(CHANNELLIBS)
+hamssh-pkcs11-helper$(EXEEXT): $(LIBCOMPAT) libhamssh.a $(P11HELPER_OBJS)
+	$(LD) -o $@ $(P11HELPER_OBJS) $(LDFLAGS) -lhamssh -lopenbsd-compat -lhamssh -lopenbsd-compat $(LIBS) $(CHANNELLIBS)
 
-ssh-sk-helper$(EXEEXT): $(LIBCOMPAT) libssh.a $(SKHELPER_OBJS)
-	$(LD) -o $@ $(SKHELPER_OBJS) $(LDFLAGS) -lssh -lopenbsd-compat -lssh -lopenbsd-compat $(LIBS) $(LIBFIDO2) $(CHANNELLIBS)
+hamssh-sk-helper$(EXEEXT): $(LIBCOMPAT) libhamssh.a $(SKHELPER_OBJS)
+	$(LD) -o $@ $(SKHELPER_OBJS) $(LDFLAGS) -lhamssh -lopenbsd-compat -lhamssh -lopenbsd-compat $(LIBS) $(LIBFIDO2) $(CHANNELLIBS)
 
-ssh-keyscan$(EXEEXT): $(LIBCOMPAT) libssh.a $(SSHKEYSCAN_OBJS)
-	$(LD) -o $@ $(SSHKEYSCAN_OBJS) $(LDFLAGS) -lssh -lopenbsd-compat -lssh $(LIBS) $(CHANNELLIBS)
+hamssh-keyscan$(EXEEXT): $(LIBCOMPAT) libhamssh.a $(SSHKEYSCAN_OBJS)
+	$(LD) -o $@ $(SSHKEYSCAN_OBJS) $(LDFLAGS) -lhamssh -lopenbsd-compat -lhamssh $(LIBS) $(CHANNELLIBS)
 
-sftp-server$(EXEEXT): $(LIBCOMPAT) libssh.a $(SFTPSERVER_OBJS)
-	$(LD) -o $@ $(SFTPSERVER_OBJS) $(LDFLAGS) -lssh -lopenbsd-compat -lssh $(LIBS)
+hamsftp-server$(EXEEXT): $(LIBCOMPAT) libhamssh.a $(SFTPSERVER_OBJS)
+	$(LD) -o $@ $(SFTPSERVER_OBJS) $(LDFLAGS) -lhamssh -lopenbsd-compat -lhamssh $(LIBS)
 
-sftp$(EXEEXT): $(LIBCOMPAT) libssh.a $(SFTP_OBJS)
-	$(LD) -o $@ $(SFTP_OBJS) $(LDFLAGS) -lssh -lopenbsd-compat $(LIBS) $(LIBEDIT)
+hamsftp$(EXEEXT): $(LIBCOMPAT) libhamssh.a $(SFTP_OBJS)
+	$(LD) -o $@ $(SFTP_OBJS) $(LDFLAGS) -lhamssh -lopenbsd-compat $(LIBS) $(LIBEDIT)
 
 # test driver for the loginrec code - not built by default
-logintest: logintest.o $(LIBCOMPAT) libssh.a loginrec.o
-	$(LD) -o $@ logintest.o $(LDFLAGS) loginrec.o -lopenbsd-compat -lssh $(LIBS)
+logintest: logintest.o $(LIBCOMPAT) libhamssh.a loginrec.o
+	$(LD) -o $@ logintest.o $(LDFLAGS) loginrec.o -lopenbsd-compat -lhamssh $(LIBS)
 
 $(MANPAGES): $(MANPAGES_IN)
 	if test "$(MANTYPE)" = "cat"; then \
@@ -382,7 +382,7 @@ install-nokeys: $(CONFIGFILES) $(MANPAGES) $(TARGETS) install-files install-sysc
 install-nosysconf: $(CONFIGFILES) $(MANPAGES) $(TARGETS) install-files
 
 check-config:
-	-$(DESTDIR)$(sbindir)/sshd -t -f $(DESTDIR)$(sysconfdir)/sshd_config
+	-$(DESTDIR)$(sbindir)/hamsshd -t -f $(DESTDIR)$(sysconfdir)/hamsshd_config
 
 install-files:
 	$(MKDIR_P) $(DESTDIR)$(bindir)
@@ -392,18 +392,18 @@ install-files:
 	$(MKDIR_P) $(DESTDIR)$(mandir)/$(mansubdir)8
 	$(MKDIR_P) $(DESTDIR)$(libexecdir)
 	$(MKDIR_P) -m 0755 $(DESTDIR)$(PRIVSEP_PATH)
-	$(INSTALL) -m 0755 $(STRIP_OPT) ssh$(EXEEXT) $(DESTDIR)$(bindir)/ssh$(EXEEXT)
-	$(INSTALL) -m 0755 $(STRIP_OPT) scp$(EXEEXT) $(DESTDIR)$(bindir)/scp$(EXEEXT)
-	$(INSTALL) -m 0755 $(STRIP_OPT) ssh-add$(EXEEXT) $(DESTDIR)$(bindir)/ssh-add$(EXEEXT)
-	$(INSTALL) -m 0755 $(STRIP_OPT) ssh-agent$(EXEEXT) $(DESTDIR)$(bindir)/ssh-agent$(EXEEXT)
-	$(INSTALL) -m 0755 $(STRIP_OPT) ssh-keygen$(EXEEXT) $(DESTDIR)$(bindir)/ssh-keygen$(EXEEXT)
-	$(INSTALL) -m 0755 $(STRIP_OPT) ssh-keyscan$(EXEEXT) $(DESTDIR)$(bindir)/ssh-keyscan$(EXEEXT)
-	$(INSTALL) -m 0755 $(STRIP_OPT) sshd$(EXEEXT) $(DESTDIR)$(sbindir)/sshd$(EXEEXT)
-	$(INSTALL) -m 4711 $(STRIP_OPT) ssh-keysign$(EXEEXT) $(DESTDIR)$(SSH_KEYSIGN)$(EXEEXT)
-	$(INSTALL) -m 0755 $(STRIP_OPT) ssh-pkcs11-helper$(EXEEXT) $(DESTDIR)$(SSH_PKCS11_HELPER)$(EXEEXT)
-	$(INSTALL) -m 0755 $(STRIP_OPT) ssh-sk-helper$(EXEEXT) $(DESTDIR)$(SSH_SK_HELPER)$(EXEEXT)
-	$(INSTALL) -m 0755 $(STRIP_OPT) sftp$(EXEEXT) $(DESTDIR)$(bindir)/sftp$(EXEEXT)
-	$(INSTALL) -m 0755 $(STRIP_OPT) sftp-server$(EXEEXT) $(DESTDIR)$(SFTP_SERVER)$(EXEEXT)
+	$(INSTALL) -m 0755 $(STRIP_OPT) hamssh$(EXEEXT) $(DESTDIR)$(bindir)/hamssh$(EXEEXT)
+	$(INSTALL) -m 0755 $(STRIP_OPT) hamscp$(EXEEXT) $(DESTDIR)$(bindir)/hamscp$(EXEEXT)
+	$(INSTALL) -m 0755 $(STRIP_OPT) hamssh-add$(EXEEXT) $(DESTDIR)$(bindir)/hamssh-add$(EXEEXT)
+	$(INSTALL) -m 0755 $(STRIP_OPT) hamssh-agent$(EXEEXT) $(DESTDIR)$(bindir)/hamssh-agent$(EXEEXT)
+	$(INSTALL) -m 0755 $(STRIP_OPT) hamssh-keygen$(EXEEXT) $(DESTDIR)$(bindir)/hamssh-keygen$(EXEEXT)
+	$(INSTALL) -m 0755 $(STRIP_OPT) hamssh-keyscan$(EXEEXT) $(DESTDIR)$(bindir)/hamssh-keyscan$(EXEEXT)
+	$(INSTALL) -m 0755 $(STRIP_OPT) hamsshd$(EXEEXT) $(DESTDIR)$(sbindir)/hamsshd$(EXEEXT)
+	$(INSTALL) -m 4711 $(STRIP_OPT) hamssh-keysign$(EXEEXT) $(DESTDIR)$(SSH_KEYSIGN)$(EXEEXT)
+	$(INSTALL) -m 0755 $(STRIP_OPT) hamssh-pkcs11-helper$(EXEEXT) $(DESTDIR)$(SSH_PKCS11_HELPER)$(EXEEXT)
+	$(INSTALL) -m 0755 $(STRIP_OPT) hamssh-sk-helper$(EXEEXT) $(DESTDIR)$(SSH_SK_HELPER)$(EXEEXT)
+	$(INSTALL) -m 0755 $(STRIP_OPT) hamsftp$(EXEEXT) $(DESTDIR)$(bindir)/hamsftp$(EXEEXT)
+	$(INSTALL) -m 0755 $(STRIP_OPT) hamsftp-server$(EXEEXT) $(DESTDIR)$(SFTP_SERVER)$(EXEEXT)
 	$(INSTALL) -m 644 ssh.1.out $(DESTDIR)$(mandir)/$(mansubdir)1/ssh.1
 	$(INSTALL) -m 644 scp.1.out $(DESTDIR)$(mandir)/$(mansubdir)1/scp.1
 	$(INSTALL) -m 644 ssh-add.1.out $(DESTDIR)$(mandir)/$(mansubdir)1/ssh-add.1
@@ -422,43 +422,43 @@ install-files:
 
 install-sysconf:
 	$(MKDIR_P) $(DESTDIR)$(sysconfdir)
-	@if [ ! -f $(DESTDIR)$(sysconfdir)/ssh_config ]; then \
-		$(INSTALL) -m 644 ssh_config.out $(DESTDIR)$(sysconfdir)/ssh_config; \
+	@if [ ! -f $(DESTDIR)$(sysconfdir)/hamssh_config ]; then \
+		$(INSTALL) -m 644 hamssh_config.out $(DESTDIR)$(sysconfdir)/hamssh_config; \
 	else \
-		echo "$(DESTDIR)$(sysconfdir)/ssh_config already exists, install will not overwrite"; \
+		echo "$(DESTDIR)$(sysconfdir)/hamssh_config already exists, install will not overwrite"; \
 	fi
-	@if [ ! -f $(DESTDIR)$(sysconfdir)/sshd_config ]; then \
-		$(INSTALL) -m 644 sshd_config.out $(DESTDIR)$(sysconfdir)/sshd_config; \
+	@if [ ! -f $(DESTDIR)$(sysconfdir)/hamsshd_config ]; then \
+		$(INSTALL) -m 644 hamsshd_config.out $(DESTDIR)$(sysconfdir)/hamsshd_config; \
 	else \
-		echo "$(DESTDIR)$(sysconfdir)/sshd_config already exists, install will not overwrite"; \
+		echo "$(DESTDIR)$(sysconfdir)/hamsshd_config already exists, install will not overwrite"; \
 	fi
-	@if [ ! -f $(DESTDIR)$(sysconfdir)/moduli ]; then \
+	@if [ ! -f $(DESTDIR)$(sysconfdir)/hammoduli ]; then \
 		if [ -f $(DESTDIR)$(sysconfdir)/primes ]; then \
-			echo "moving $(DESTDIR)$(sysconfdir)/primes to $(DESTDIR)$(sysconfdir)/moduli"; \
-			mv "$(DESTDIR)$(sysconfdir)/primes" "$(DESTDIR)$(sysconfdir)/moduli"; \
+			echo "moving $(DESTDIR)$(sysconfdir)/primes to $(DESTDIR)$(sysconfdir)/hammoduli"; \
+			mv "$(DESTDIR)$(sysconfdir)/primes" "$(DESTDIR)$(sysconfdir)/hammoduli"; \
 		else \
-			$(INSTALL) -m 644 moduli.out $(DESTDIR)$(sysconfdir)/moduli; \
+			$(INSTALL) -m 644 hammoduli.out $(DESTDIR)$(sysconfdir)/hammoduli; \
 		fi ; \
 	else \
-		echo "$(DESTDIR)$(sysconfdir)/moduli already exists, install will not overwrite"; \
+		echo "$(DESTDIR)$(sysconfdir)/hammoduli already exists, install will not overwrite"; \
 	fi
 
-host-key: ssh-keygen$(EXEEXT)
+host-key: hamssh-keygen$(EXEEXT)
 	@if [ -z "$(DESTDIR)" ] ; then \
-		./ssh-keygen -A; \
+		./hamssh-keygen -A; \
 	fi
 
-host-key-force: ssh-keygen$(EXEEXT) ssh$(EXEEXT)
-	./ssh-keygen -t dsa -f $(DESTDIR)$(sysconfdir)/ssh_host_dsa_key -N ""
-	./ssh-keygen -t rsa -f $(DESTDIR)$(sysconfdir)/ssh_host_rsa_key -N ""
-	./ssh-keygen -t ed25519 -f $(DESTDIR)$(sysconfdir)/ssh_host_ed25519_key -N ""
-	if ./ssh -Q key | grep ecdsa >/dev/null ; then \
-		./ssh-keygen -t ecdsa -f $(DESTDIR)$(sysconfdir)/ssh_host_ecdsa_key -N ""; \
+host-key-force: hamssh-keygen$(EXEEXT) hamssh$(EXEEXT)
+	./hamssh-keygen -t dsa -f $(DESTDIR)$(sysconfdir)/hamssh_host_dsa_key -N ""
+	./hamssh-keygen -t rsa -f $(DESTDIR)$(sysconfdir)/hamssh_host_rsa_key -N ""
+	./hamssh-keygen -t ed25519 -f $(DESTDIR)$(sysconfdir)/hamssh_host_ed25519_key -N ""
+	if ./hamssh -Q key | grep ecdsa >/dev/null ; then \
+		./hamssh-keygen -t ecdsa -f $(DESTDIR)$(sysconfdir)/hamssh_host_ecdsa_key -N ""; \
 	fi
 
 uninstallall:	uninstall
-	-rm -f $(DESTDIR)$(sysconfdir)/ssh_config
-	-rm -f $(DESTDIR)$(sysconfdir)/sshd_config
+	-rm -f $(DESTDIR)$(sysconfdir)/hamssh_config
+	-rm -f $(DESTDIR)$(sysconfdir)/hamsshd_config
 	-rmdir $(DESTDIR)$(sysconfdir)
 	-rmdir $(DESTDIR)$(bindir)
 	-rmdir $(DESTDIR)$(sbindir)
@@ -468,14 +468,14 @@ uninstallall:	uninstall
 	-rmdir $(DESTDIR)$(libexecdir)
 
 uninstall:
-	-rm -f $(DESTDIR)$(bindir)/ssh$(EXEEXT)
-	-rm -f $(DESTDIR)$(bindir)/scp$(EXEEXT)
-	-rm -f $(DESTDIR)$(bindir)/ssh-add$(EXEEXT)
-	-rm -f $(DESTDIR)$(bindir)/ssh-agent$(EXEEXT)
-	-rm -f $(DESTDIR)$(bindir)/ssh-keygen$(EXEEXT)
-	-rm -f $(DESTDIR)$(bindir)/ssh-keyscan$(EXEEXT)
-	-rm -f $(DESTDIR)$(bindir)/sftp$(EXEEXT)
-	-rm -f $(DESTDIR)$(sbindir)/sshd$(EXEEXT)
+	-rm -f $(DESTDIR)$(bindir)/hamssh$(EXEEXT)
+	-rm -f $(DESTDIR)$(bindir)/hamscp$(EXEEXT)
+	-rm -f $(DESTDIR)$(bindir)/hamssh-add$(EXEEXT)
+	-rm -f $(DESTDIR)$(bindir)/hamssh-agent$(EXEEXT)
+	-rm -f $(DESTDIR)$(bindir)/hamssh-keygen$(EXEEXT)
+	-rm -f $(DESTDIR)$(bindir)/hamssh-keyscan$(EXEEXT)
+	-rm -f $(DESTDIR)$(bindir)/hamsftp$(EXEEXT)
+	-rm -f $(DESTDIR)$(sbindir)/hamsshd$(EXEEXT)
 	-rm -r $(DESTDIR)$(SFTP_SERVER)$(EXEEXT)
 	-rm -f $(DESTDIR)$(SSH_KEYSIGN)$(EXEEXT)
 	-rm -f $(DESTDIR)$(SSH_PKCS11_HELPER)$(EXEEXT)
@@ -510,28 +510,28 @@ regress-prep:
 	[ -f `pwd`/regress/Makefile ] || \
 	    ln -s `cd $(srcdir) && pwd`/regress/Makefile `pwd`/regress/Makefile
 
-REGRESSLIBS=libssh.a $(LIBCOMPAT)
+REGRESSLIBS=libhamssh.a $(LIBCOMPAT)
 TESTLIBS=$(LIBS) $(CHANNELLIBS)
 
 regress/modpipe$(EXEEXT): $(srcdir)/regress/modpipe.c $(REGRESSLIBS)
 	$(CC) $(CFLAGS) $(CPPFLAGS) -o $@ $(srcdir)/regress/modpipe.c \
-	$(LDFLAGS) -lssh -lopenbsd-compat -lssh -lopenbsd-compat $(TESTLIBS)
+	$(LDFLAGS) -lhamssh -lopenbsd-compat -lhamssh -lopenbsd-compat $(TESTLIBS)
 
 regress/setuid-allowed$(EXEEXT): $(srcdir)/regress/setuid-allowed.c $(REGRESSLIBS)
 	$(CC) $(CFLAGS) $(CPPFLAGS) -o $@ $(srcdir)/regress/setuid-allowed.c \
-	$(LDFLAGS) -lssh -lopenbsd-compat -lssh -lopenbsd-compat $(TESTLIBS)
+	$(LDFLAGS) -lhamssh -lopenbsd-compat -lhamssh -lopenbsd-compat $(TESTLIBS)
 
 regress/netcat$(EXEEXT): $(srcdir)/regress/netcat.c $(REGRESSLIBS)
 	$(CC) $(CFLAGS) $(CPPFLAGS) -o $@ $(srcdir)/regress/netcat.c \
-	$(LDFLAGS) -lssh -lopenbsd-compat -lssh -lopenbsd-compat $(TESTLIBS)
+	$(LDFLAGS) -lhamssh -lopenbsd-compat -lhamssh -lopenbsd-compat $(TESTLIBS)
 
 regress/check-perm$(EXEEXT): $(srcdir)/regress/check-perm.c $(REGRESSLIBS)
 	$(CC) $(CFLAGS) $(CPPFLAGS) -o $@ $(srcdir)/regress/check-perm.c \
-	$(LDFLAGS) -lssh -lopenbsd-compat -lssh -lopenbsd-compat $(TESTLIBS)
+	$(LDFLAGS) -lhamssh -lopenbsd-compat -lhamssh -lopenbsd-compat $(TESTLIBS)
 
 regress/mkdtemp$(EXEEXT): $(srcdir)/regress/mkdtemp.c $(REGRESSLIBS)
 	$(CC) $(CFLAGS) $(CPPFLAGS) -o $@ $(srcdir)/regress/mkdtemp.c \
-	$(LDFLAGS) -lssh -lopenbsd-compat -lssh -lopenbsd-compat $(TESTLIBS)
+	$(LDFLAGS) -lhamssh -lopenbsd-compat -lhamssh -lopenbsd-compat $(TESTLIBS)
 
 UNITTESTS_TEST_HELPER_OBJS=\
 	regress/unittests/test_helper/test_helper.o \
@@ -552,10 +552,10 @@ UNITTESTS_TEST_SSHBUF_OBJS=\
 	regress/unittests/sshbuf/test_sshbuf_fixed.o
 
 regress/unittests/sshbuf/test_sshbuf$(EXEEXT): ${UNITTESTS_TEST_SSHBUF_OBJS} \
-    regress/unittests/test_helper/libtest_helper.a libssh.a
+    regress/unittests/test_helper/libtest_helper.a libhamssh.a
 	$(LD) -o $@ $(LDFLAGS) $(UNITTESTS_TEST_SSHBUF_OBJS) \
 	    regress/unittests/test_helper/libtest_helper.a \
-	    -lssh -lopenbsd-compat -lssh -lopenbsd-compat $(TESTLIBS)
+	    -lhamssh -lopenbsd-compat -lhamssh -lopenbsd-compat $(TESTLIBS)
 
 UNITTESTS_TEST_SSHKEY_OBJS=\
 	regress/unittests/sshkey/test_fuzz.o \
@@ -566,10 +566,10 @@ UNITTESTS_TEST_SSHKEY_OBJS=\
 	$(SKOBJS)
 
 regress/unittests/sshkey/test_sshkey$(EXEEXT): ${UNITTESTS_TEST_SSHKEY_OBJS} \
-    regress/unittests/test_helper/libtest_helper.a libssh.a
+    regress/unittests/test_helper/libtest_helper.a libhamssh.a
 	$(LD) -o $@ $(LDFLAGS) $(UNITTESTS_TEST_SSHKEY_OBJS) \
 	    regress/unittests/test_helper/libtest_helper.a \
-	    -lssh -lopenbsd-compat -lssh -lopenbsd-compat $(TESTLIBS)
+	    -lhamssh -lopenbsd-compat -lhamssh -lopenbsd-compat $(TESTLIBS)
 
 UNITTESTS_TEST_SSHSIG_OBJS=\
 	sshsig.o \
@@ -577,19 +577,19 @@ UNITTESTS_TEST_SSHSIG_OBJS=\
 	$(SKOBJS)
 
 regress/unittests/sshsig/test_sshsig$(EXEEXT): ${UNITTESTS_TEST_SSHSIG_OBJS} \
-    regress/unittests/test_helper/libtest_helper.a libssh.a
+    regress/unittests/test_helper/libtest_helper.a libhamssh.a
 	$(LD) -o $@ $(LDFLAGS) $(UNITTESTS_TEST_SSHSIG_OBJS) \
 	    regress/unittests/test_helper/libtest_helper.a \
-	    -lssh -lopenbsd-compat -lssh -lopenbsd-compat $(TESTLIBS)
+	    -lhamssh -lopenbsd-compat -lhamssh -lopenbsd-compat $(TESTLIBS)
 
 UNITTESTS_TEST_BITMAP_OBJS=\
 	regress/unittests/bitmap/tests.o
 
 regress/unittests/bitmap/test_bitmap$(EXEEXT): ${UNITTESTS_TEST_BITMAP_OBJS} \
-    regress/unittests/test_helper/libtest_helper.a libssh.a
+    regress/unittests/test_helper/libtest_helper.a libhamssh.a
 	$(LD) -o $@ $(LDFLAGS) $(UNITTESTS_TEST_BITMAP_OBJS) \
 	    regress/unittests/test_helper/libtest_helper.a \
-	    -lssh -lopenbsd-compat -lssh -lopenbsd-compat $(TESTLIBS)
+	    -lhamssh -lopenbsd-compat -lhamssh -lopenbsd-compat $(TESTLIBS)
 
 UNITTESTS_TEST_AUTHOPT_OBJS=\
 	regress/unittests/authopt/tests.o \
@@ -598,20 +598,20 @@ UNITTESTS_TEST_AUTHOPT_OBJS=\
 
 regress/unittests/authopt/test_authopt$(EXEEXT): \
     ${UNITTESTS_TEST_AUTHOPT_OBJS} \
-    regress/unittests/test_helper/libtest_helper.a libssh.a
+    regress/unittests/test_helper/libtest_helper.a libhamssh.a
 	$(LD) -o $@ $(LDFLAGS) $(UNITTESTS_TEST_AUTHOPT_OBJS) \
 	    regress/unittests/test_helper/libtest_helper.a \
-	    -lssh -lopenbsd-compat -lssh -lopenbsd-compat $(TESTLIBS)
+	    -lhamssh -lopenbsd-compat -lhamssh -lopenbsd-compat $(TESTLIBS)
 
 UNITTESTS_TEST_CONVERSION_OBJS=\
 	regress/unittests/conversion/tests.o
 
 regress/unittests/conversion/test_conversion$(EXEEXT): \
     ${UNITTESTS_TEST_CONVERSION_OBJS} \
-    regress/unittests/test_helper/libtest_helper.a libssh.a
+    regress/unittests/test_helper/libtest_helper.a libhamssh.a
 	$(LD) -o $@ $(LDFLAGS) $(UNITTESTS_TEST_CONVERSION_OBJS) \
 	    regress/unittests/test_helper/libtest_helper.a \
-	    -lssh -lopenbsd-compat -lssh -lopenbsd-compat $(TESTLIBS)
+	    -lhamssh -lopenbsd-compat -lhamssh -lopenbsd-compat $(TESTLIBS)
 
 UNITTESTS_TEST_KEX_OBJS=\
 	regress/unittests/kex/tests.o \
@@ -620,10 +620,10 @@ UNITTESTS_TEST_KEX_OBJS=\
 	$(SKOBJS)
 
 regress/unittests/kex/test_kex$(EXEEXT): ${UNITTESTS_TEST_KEX_OBJS} \
-    regress/unittests/test_helper/libtest_helper.a libssh.a
+    regress/unittests/test_helper/libtest_helper.a libhamssh.a
 	$(LD) -o $@ $(LDFLAGS) $(UNITTESTS_TEST_KEX_OBJS) \
 	    regress/unittests/test_helper/libtest_helper.a \
-	    -lssh -lopenbsd-compat -lssh -lopenbsd-compat $(TESTLIBS)
+	    -lhamssh -lopenbsd-compat -lhamssh -lopenbsd-compat $(TESTLIBS)
 
 UNITTESTS_TEST_HOSTKEYS_OBJS=\
 	regress/unittests/hostkeys/tests.o \
@@ -632,20 +632,20 @@ UNITTESTS_TEST_HOSTKEYS_OBJS=\
 
 regress/unittests/hostkeys/test_hostkeys$(EXEEXT): \
     ${UNITTESTS_TEST_HOSTKEYS_OBJS} \
-    regress/unittests/test_helper/libtest_helper.a libssh.a
+    regress/unittests/test_helper/libtest_helper.a libhamssh.a
 	$(LD) -o $@ $(LDFLAGS) $(UNITTESTS_TEST_HOSTKEYS_OBJS) \
 	    regress/unittests/test_helper/libtest_helper.a \
-	    -lssh -lopenbsd-compat -lssh -lopenbsd-compat $(TESTLIBS)
+	    -lhamssh -lopenbsd-compat -lhamssh -lopenbsd-compat $(TESTLIBS)
 
 UNITTESTS_TEST_MATCH_OBJS=\
 	regress/unittests/match/tests.o
 
 regress/unittests/match/test_match$(EXEEXT): \
     ${UNITTESTS_TEST_MATCH_OBJS} \
-    regress/unittests/test_helper/libtest_helper.a libssh.a
+    regress/unittests/test_helper/libtest_helper.a libhamssh.a
 	$(LD) -o $@ $(LDFLAGS) $(UNITTESTS_TEST_MATCH_OBJS) \
 	    regress/unittests/test_helper/libtest_helper.a \
-	    -lssh -lopenbsd-compat -lssh -lopenbsd-compat $(TESTLIBS)
+	    -lhamssh -lopenbsd-compat -lhamssh -lopenbsd-compat $(TESTLIBS)
 
 UNITTESTS_TEST_MISC_OBJS=\
 	regress/unittests/misc/tests.o \
@@ -659,20 +659,20 @@ UNITTESTS_TEST_MISC_OBJS=\
 
 regress/unittests/misc/test_misc$(EXEEXT): \
     ${UNITTESTS_TEST_MISC_OBJS} \
-    regress/unittests/test_helper/libtest_helper.a libssh.a
+    regress/unittests/test_helper/libtest_helper.a libhamssh.a
 	$(LD) -o $@ $(LDFLAGS) $(UNITTESTS_TEST_MISC_OBJS) \
 	    regress/unittests/test_helper/libtest_helper.a \
-	    -lssh -lopenbsd-compat -lssh -lopenbsd-compat $(TESTLIBS)
+	    -lhamssh -lopenbsd-compat -lhamssh -lopenbsd-compat $(TESTLIBS)
 
 UNITTESTS_TEST_UTF8_OBJS=\
 	regress/unittests/utf8/tests.o
 
 regress/unittests/utf8/test_utf8$(EXEEXT): \
     ${UNITTESTS_TEST_UTF8_OBJS} \
-    regress/unittests/test_helper/libtest_helper.a libssh.a
+    regress/unittests/test_helper/libtest_helper.a libhamssh.a
 	$(LD) -o $@ $(LDFLAGS) $(UNITTESTS_TEST_UTF8_OBJS) \
 	    regress/unittests/test_helper/libtest_helper.a \
-	    -lssh -lopenbsd-compat -lssh -lopenbsd-compat $(TESTLIBS)
+	    -lhamssh -lopenbsd-compat -lhamssh -lopenbsd-compat $(TESTLIBS)
 
 # These all need to be compiled -fPIC, so they are treated differently.
 SK_DUMMY_OBJS=\
@@ -733,19 +733,19 @@ interop-tests t-exec file-tests: regress-prep regress-binaries $(TARGETS)
 		PATH="$(BUILDDIR):$${PATH}" \
 		TEST_ENV=MALLOC_OPTIONS="@TEST_MALLOC_OPTIONS@" \
 		TEST_MALLOC_OPTIONS="@TEST_MALLOC_OPTIONS@" \
-		TEST_SSH_SCP="$(BUILDDIR)/scp" \
-		TEST_SSH_SSH="$(BUILDDIR)/ssh" \
-		TEST_SSH_SSHD="$(BUILDDIR)/sshd" \
-		TEST_SSH_SSHAGENT="$(BUILDDIR)/ssh-agent" \
-		TEST_SSH_SSHADD="$(BUILDDIR)/ssh-add" \
-		TEST_SSH_SSHKEYGEN="$(BUILDDIR)/ssh-keygen" \
-		TEST_SSH_SSHPKCS11HELPER="$(BUILDDIR)/ssh-pkcs11-helper" \
-		TEST_SSH_SSHKEYSCAN="$(BUILDDIR)/ssh-keyscan" \
-		TEST_SSH_SFTP="$(BUILDDIR)/sftp" \
-		TEST_SSH_PKCS11_HELPER="$(BUILDDIR)/ssh-pkcs11-helper" \
-		TEST_SSH_SK_HELPER="$(BUILDDIR)/ssh-sk-helper" \
-		TEST_SSH_SFTPSERVER="$(BUILDDIR)/sftp-server" \
-		TEST_SSH_MODULI_FILE="$(abs_top_srcdir)/moduli" \
+		TEST_SSH_SCP="$(BUILDDIR)/hamscp" \
+		TEST_SSH_SSH="$(BUILDDIR)/hamssh" \
+		TEST_SSH_SSHD="$(BUILDDIR)/hamsshd" \
+		TEST_SSH_SSHAGENT="$(BUILDDIR)/hamssh-agent" \
+		TEST_SSH_SSHADD="$(BUILDDIR)/hamssh-add" \
+		TEST_SSH_SSHKEYGEN="$(BUILDDIR)/hamssh-keygen" \
+		TEST_SSH_SSHPKCS11HELPER="$(BUILDDIR)/hamssh-pkcs11-helper" \
+		TEST_SSH_SSHKEYSCAN="$(BUILDDIR)/hamssh-keyscan" \
+		TEST_SSH_SFTP="$(BUILDDIR)/hamsftp" \
+		TEST_SSH_PKCS11_HELPER="$(BUILDDIR)/hamssh-pkcs11-helper" \
+		TEST_SSH_SK_HELPER="$(BUILDDIR)/hamssh-sk-helper" \
+		TEST_SSH_SFTPSERVER="$(BUILDDIR)/hamsftp-server" \
+		TEST_SSH_MODULI_FILE="$(abs_top_srcdir)/hammoduli" \
 		TEST_SSH_PLINK="plink" \
 		TEST_SSH_PUTTYGEN="puttygen" \
 		TEST_SSH_CONCH="conch" \

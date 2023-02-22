@@ -26,32 +26,32 @@
  * System-wide file containing host keys of known hosts.  This file should be
  * world-readable.
  */
-#define _PATH_SSH_SYSTEM_HOSTFILE	SSHDIR "/ssh_known_hosts"
+#define _PATH_SSH_SYSTEM_HOSTFILE	SSHDIR "/hamssh_known_hosts"
 /* backward compat for protocol 2 */
-#define _PATH_SSH_SYSTEM_HOSTFILE2	SSHDIR "/ssh_known_hosts2"
+#define _PATH_SSH_SYSTEM_HOSTFILE2	SSHDIR "/hamssh_known_hosts2"
 
 /*
  * Of these, ssh_host_key must be readable only by root, whereas ssh_config
  * should be world-readable.
  */
-#define _PATH_SERVER_CONFIG_FILE	SSHDIR "/sshd_config"
-#define _PATH_HOST_CONFIG_FILE		SSHDIR "/ssh_config"
-#define _PATH_HOST_DSA_KEY_FILE		SSHDIR "/ssh_host_dsa_key"
-#define _PATH_HOST_ECDSA_KEY_FILE	SSHDIR "/ssh_host_ecdsa_key"
-#define _PATH_HOST_ED25519_KEY_FILE	SSHDIR "/ssh_host_ed25519_key"
-#define _PATH_HOST_XMSS_KEY_FILE	SSHDIR "/ssh_host_xmss_key"
-#define _PATH_HOST_RSA_KEY_FILE		SSHDIR "/ssh_host_rsa_key"
-#define _PATH_DH_MODULI			SSHDIR "/moduli"
+#define _PATH_SERVER_CONFIG_FILE	SSHDIR "/hamsshd_config"
+#define _PATH_HOST_CONFIG_FILE		SSHDIR "/hamssh_config"
+#define _PATH_HOST_DSA_KEY_FILE		SSHDIR "/hamssh_host_dsa_key"
+#define _PATH_HOST_ECDSA_KEY_FILE	SSHDIR "/hamssh_host_ecdsa_key"
+#define _PATH_HOST_ED25519_KEY_FILE	SSHDIR "/hamssh_host_ed25519_key"
+#define _PATH_HOST_XMSS_KEY_FILE	SSHDIR "/hamssh_host_xmss_key"
+#define _PATH_HOST_RSA_KEY_FILE		SSHDIR "/hamssh_host_rsa_key"
+#define _PATH_DH_MODULI			SSHDIR "/hammoduli"
 
 #ifndef _PATH_SSH_PROGRAM
-#define _PATH_SSH_PROGRAM		"/usr/bin/ssh"
+#define _PATH_SSH_PROGRAM		"/usr/bin/hamssh"
 #endif
 
 /*
  * The process id of the daemon listening for connections is saved here to
  * make it easier to kill the correct daemon when necessary.
  */
-#define _PATH_SSH_DAEMON_PID_FILE	_PATH_SSH_PIDDIR "/sshd.pid"
+#define _PATH_SSH_DAEMON_PID_FILE	_PATH_SSH_PIDDIR "/hamsshd.pid"
 
 /*
  * The directory in user's home directory in which the files reside. The
@@ -64,9 +64,9 @@
  * readable by anyone except the user him/herself, though this does not
  * contain anything particularly secret.
  */
-#define _PATH_SSH_USER_HOSTFILE		"~/" _PATH_SSH_USER_DIR "/known_hosts"
+#define _PATH_SSH_USER_HOSTFILE		"~/" _PATH_SSH_USER_DIR "/hamknown_hosts"
 /* backward compat for protocol 2 */
-#define _PATH_SSH_USER_HOSTFILE2	"~/" _PATH_SSH_USER_DIR "/known_hosts2"
+#define _PATH_SSH_USER_HOSTFILE2	"~/" _PATH_SSH_USER_DIR "/hamknown_hosts2"
 
 /*
  * Name of the default file containing client-side authentication key. This
