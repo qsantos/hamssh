@@ -1,4 +1,4 @@
-.\" $OpenBSD: sftp.1,v 1.143 2022/12/16 03:40:03 djm Exp $
+.\" $OpenBSD: hamsftp.1,v 1.143 2022/12/16 03:40:03 djm Exp $
 .\"
 .\" Copyright (c) 2001 Damien Miller.  All rights reserved.
 .\"
@@ -26,16 +26,16 @@
 .Dt SFTP 1
 .Os
 .Sh NAME
-.Nm sftp
+.Nm hamsftp
 .Nd OpenSSH secure file transfer
 .Sh SYNOPSIS
-.Nm sftp
+.Nm hamsftp
 .Op Fl 46AaCfNpqrv
 .Op Fl B Ar buffer_size
 .Op Fl b Ar batchfile
 .Op Fl c Ar cipher
 .Op Fl D Ar sftp_server_command
-.Op Fl F Ar ssh_config
+.Op Fl F Ar hamssh_config
 .Op Fl i Ar identity_file
 .Op Fl J Ar destination
 .Op Fl l Ar limit
@@ -51,9 +51,9 @@
 is a file transfer program, similar to
 .Xr ftp 1 ,
 which performs all operations over an encrypted
-.Xr ssh 1
+.Xr hamssh 1
 transport.
-It may also use many features of ssh, such as public key authentication and
+It may also use many features of hamssh, such as public key authentication and
 compression.
 .Pp
 The
@@ -107,7 +107,7 @@ Forces
 to use IPv6 addresses only.
 .It Fl A
 Allows forwarding of
-.Xr ssh-agent 1
+.Xr hamssh-agent 1
 to the remote system.
 The default is not to forward an authentication agent.
 .It Fl a
@@ -130,9 +130,9 @@ instead of
 Since it lacks user interaction, it should be used in conjunction with
 non-interactive authentication to obviate the need to enter a password
 at connection time (see
-.Xr sshd 8
+.Xr hamsshd 8
 and
-.Xr ssh-keygen 1
+.Xr hamssh-keygen 1
 for details).
 .Pp
 A
@@ -161,26 +161,26 @@ character.
 These two prefixes may be combined in any order, for example
 .Ic -@ls /bsd .
 .It Fl C
-Enables compression (via ssh's
+Enables compression (via hamssh's
 .Fl C
 flag).
 .It Fl c Ar cipher
 Selects the cipher to use for encrypting the data transfers.
 This option is directly passed to
-.Xr ssh 1 .
+.Xr hamssh 1 .
 .It Fl D Ar sftp_server_command
-Connect directly to a local sftp server
+Connect directly to a local hamsftp server
 (rather than via
-.Xr ssh 1 ) .
+.Xr hamssh 1 ) .
 A command and arguments may be specified, for example
 .Qq /path/sftp-server -el debug3 .
 This option may be useful in debugging the client and server.
-.It Fl F Ar ssh_config
+.It Fl F Ar hamssh_config
 Specifies an alternative
 per-user configuration file for
-.Xr ssh 1 .
+.Xr hamssh 1 .
 This option is directly passed to
-.Xr ssh 1 .
+.Xr hamssh 1 .
 .It Fl f
 Requests that files be flushed to disk immediately after transfer.
 When uploading files, this feature is only enabled if the server
@@ -189,7 +189,7 @@ implements the "fsync@openssh.com" extension.
 Selects the file from which the identity (private key) for public key
 authentication is read.
 This option is directly passed to
-.Xr ssh 1 .
+.Xr hamssh 1 .
 .It Fl J Ar destination
 Connect to the target host by first making an
 .Nm
@@ -202,7 +202,7 @@ This is a shortcut to specify a
 .Cm ProxyJump
 configuration directive.
 This option is directly passed to
-.Xr ssh 1 .
+.Xr hamssh 1 .
 .It Fl l Ar limit
 Limits the used bandwidth, specified in Kbit/s.
 .It Fl N
@@ -211,17 +211,17 @@ Disables quiet mode, e.g. to override the implicit quiet mode set by the
 flag.
 .It Fl o Ar ssh_option
 Can be used to pass options to
-.Nm ssh
+.Nm hamssh
 in the format used in
-.Xr ssh_config 5 .
+.Xr hamssh_config 5 .
 This is useful for specifying options
 for which there is no separate
-.Nm sftp
+.Nm hamsftp
 command-line flag.
 For example, to specify an alternate port use:
-.Ic sftp -oPort=24 .
+.Ic hamsftp -oPort=24 .
 For full details of the options listed below, and their possible values, see
-.Xr ssh_config 5 .
+.Xr hamssh_config 5 .
 .Pp
 .Bl -tag -width Ds -offset indent -compact
 .It AddressFamily
@@ -294,7 +294,7 @@ original files transferred.
 .It Fl q
 Quiet mode: disables the progress meter as well as warning and
 diagnostic messages from
-.Xr ssh 1 .
+.Xr hamssh 1 .
 .It Fl R Ar num_requests
 Specify how many requests may be outstanding at any one time.
 Increasing this may slightly improve file transfer speed
@@ -310,17 +310,17 @@ Name of the
 .Ar program
 to use for the encrypted connection.
 The program must understand
-.Xr ssh 1
+.Xr hamssh 1
 options.
 .It Fl s Ar subsystem | sftp_server
 Specifies the SSH2 subsystem or the path for an sftp server
 on the remote host.
 A path is useful when the remote
-.Xr sshd 8
-does not have an sftp subsystem configured.
+.Xr hamsshd 8
+does not have an hamsftp subsystem configured.
 .It Fl v
 Raise logging level.
-This option is also passed to ssh.
+This option is also passed to hamssh.
 .It Fl X Ar sftp_option
 Specify an option that controls aspects of SFTP protocol behaviour.
 The valid options are:
@@ -349,7 +349,7 @@ must be escaped with backslashes
 .Bl -tag -width Ds
 .It Ic bye
 Quit
-.Nm sftp .
+.Nm hamsftp .
 .It Ic cd Op Ar path
 Change remote directory to
 .Ar path .
@@ -449,7 +449,7 @@ This command is only supported on servers that implement the
 extension.
 .It Ic exit
 Quit
-.Nm sftp .
+.Nm hamsftp .
 .It Xo Ic get
 .Op Fl afpR
 .Ar remote-path
@@ -653,7 +653,7 @@ does not follow symbolic links when performing recursive transfers.
 Display remote working directory.
 .It Ic quit
 Quit
-.Nm sftp .
+.Nm hamsftp .
 .It Xo Ic reget
 .Op Fl fpR
 .Ar remote-path
@@ -710,14 +710,14 @@ Synonym for help.
 .Sh SEE ALSO
 .Xr ftp 1 ,
 .Xr ls 1 ,
-.Xr scp 1 ,
-.Xr ssh 1 ,
-.Xr ssh-add 1 ,
-.Xr ssh-keygen 1 ,
-.Xr ssh_config 5 ,
+.Xr hamscp 1 ,
+.Xr hamssh 1 ,
+.Xr hamssh-add 1 ,
+.Xr hamssh-keygen 1 ,
+.Xr hamssh_config 5 ,
 .Xr glob 7 ,
-.Xr sftp-server 8 ,
-.Xr sshd 8
+.Xr hamsftp-server 8 ,
+.Xr hamsshd 8
 .Rs
 .%A T. Ylonen
 .%A S. Lehtinen

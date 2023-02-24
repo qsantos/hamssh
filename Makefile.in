@@ -155,8 +155,8 @@ SFTPSERVER_OBJS=sftp-common.o sftp-server.o sftp-server-main.o
 
 SFTP_OBJS=	sftp.o sftp-usergroup.o progressmeter.o $(SFTP_CLIENT_OBJS)
 
-MANPAGES	= moduli.5.out scp.1.out ssh-add.1.out ssh-agent.1.out ssh-keygen.1.out ssh-keyscan.1.out ssh.1.out sshd.8.out sftp-server.8.out sftp.1.out ssh-keysign.8.out ssh-pkcs11-helper.8.out ssh-sk-helper.8.out sshd_config.5.out ssh_config.5.out
-MANPAGES_IN	= moduli.5 scp.1 ssh-add.1 ssh-agent.1 ssh-keygen.1 ssh-keyscan.1 ssh.1 sshd.8 sftp-server.8 sftp.1 ssh-keysign.8 ssh-pkcs11-helper.8 ssh-sk-helper.8 sshd_config.5 ssh_config.5
+MANPAGES	= hammoduli.5.out hamscp.1.out hamssh-add.1.out hamssh-agent.1.out hamssh-keygen.1.out hamssh-keyscan.1.out hamssh.1.out hamsshd.8.out hamsftp-server.8.out hamsftp.1.out hamssh-keysign.8.out hamssh-pkcs11-helper.8.out hamssh-sk-helper.8.out hamsshd_config.5.out hamssh_config.5.out
+MANPAGES_IN	= hammoduli.5 hamscp.1 hamssh-add.1 hamssh-agent.1 hamssh-keygen.1 hamssh-keyscan.1 hamssh.1 hamsshd.8 hamsftp-server.8 hamsftp.1 hamssh-keysign.8 hamssh-pkcs11-helper.8 hamssh-sk-helper.8 hamsshd_config.5 hamssh_config.5
 MANTYPE		= @MANTYPE@
 
 CONFIGFILES=hamsshd_config.out hamssh_config.out hammoduli.out
@@ -404,21 +404,21 @@ install-files:
 	$(INSTALL) -m 0755 $(STRIP_OPT) hamssh-sk-helper$(EXEEXT) $(DESTDIR)$(SSH_SK_HELPER)$(EXEEXT)
 	$(INSTALL) -m 0755 $(STRIP_OPT) hamsftp$(EXEEXT) $(DESTDIR)$(bindir)/hamsftp$(EXEEXT)
 	$(INSTALL) -m 0755 $(STRIP_OPT) hamsftp-server$(EXEEXT) $(DESTDIR)$(SFTP_SERVER)$(EXEEXT)
-	$(INSTALL) -m 644 ssh.1.out $(DESTDIR)$(mandir)/$(mansubdir)1/ssh.1
-	$(INSTALL) -m 644 scp.1.out $(DESTDIR)$(mandir)/$(mansubdir)1/scp.1
-	$(INSTALL) -m 644 ssh-add.1.out $(DESTDIR)$(mandir)/$(mansubdir)1/ssh-add.1
-	$(INSTALL) -m 644 ssh-agent.1.out $(DESTDIR)$(mandir)/$(mansubdir)1/ssh-agent.1
-	$(INSTALL) -m 644 ssh-keygen.1.out $(DESTDIR)$(mandir)/$(mansubdir)1/ssh-keygen.1
-	$(INSTALL) -m 644 ssh-keyscan.1.out $(DESTDIR)$(mandir)/$(mansubdir)1/ssh-keyscan.1
-	$(INSTALL) -m 644 moduli.5.out $(DESTDIR)$(mandir)/$(mansubdir)5/moduli.5
-	$(INSTALL) -m 644 sshd_config.5.out $(DESTDIR)$(mandir)/$(mansubdir)5/sshd_config.5
-	$(INSTALL) -m 644 ssh_config.5.out $(DESTDIR)$(mandir)/$(mansubdir)5/ssh_config.5
-	$(INSTALL) -m 644 sshd.8.out $(DESTDIR)$(mandir)/$(mansubdir)8/sshd.8
-	$(INSTALL) -m 644 sftp.1.out $(DESTDIR)$(mandir)/$(mansubdir)1/sftp.1
-	$(INSTALL) -m 644 sftp-server.8.out $(DESTDIR)$(mandir)/$(mansubdir)8/sftp-server.8
-	$(INSTALL) -m 644 ssh-keysign.8.out $(DESTDIR)$(mandir)/$(mansubdir)8/ssh-keysign.8
-	$(INSTALL) -m 644 ssh-pkcs11-helper.8.out $(DESTDIR)$(mandir)/$(mansubdir)8/ssh-pkcs11-helper.8
-	$(INSTALL) -m 644 ssh-sk-helper.8.out $(DESTDIR)$(mandir)/$(mansubdir)8/ssh-sk-helper.8
+	$(INSTALL) -m 644 hamssh.1.out $(DESTDIR)$(mandir)/$(mansubdir)1/hamssh.1
+	$(INSTALL) -m 644 hamscp.1.out $(DESTDIR)$(mandir)/$(mansubdir)1/hamscp.1
+	$(INSTALL) -m 644 hamssh-add.1.out $(DESTDIR)$(mandir)/$(mansubdir)1/hamssh-add.1
+	$(INSTALL) -m 644 hamssh-agent.1.out $(DESTDIR)$(mandir)/$(mansubdir)1/hamssh-agent.1
+	$(INSTALL) -m 644 hamssh-keygen.1.out $(DESTDIR)$(mandir)/$(mansubdir)1/hamssh-keygen.1
+	$(INSTALL) -m 644 hamssh-keyscan.1.out $(DESTDIR)$(mandir)/$(mansubdir)1/hamssh-keyscan.1
+	$(INSTALL) -m 644 hammoduli.5.out $(DESTDIR)$(mandir)/$(mansubdir)5/hammoduli.5
+	$(INSTALL) -m 644 hamsshd_config.5.out $(DESTDIR)$(mandir)/$(mansubdir)5/hamsshd_config.5
+	$(INSTALL) -m 644 hamssh_config.5.out $(DESTDIR)$(mandir)/$(mansubdir)5/hamssh_config.5
+	$(INSTALL) -m 644 hamsshd.8.out $(DESTDIR)$(mandir)/$(mansubdir)8/hamsshd.8
+	$(INSTALL) -m 644 hamsftp.1.out $(DESTDIR)$(mandir)/$(mansubdir)1/hamsftp.1
+	$(INSTALL) -m 644 hamsftp-server.8.out $(DESTDIR)$(mandir)/$(mansubdir)8/hamsftp-server.8
+	$(INSTALL) -m 644 hamssh-keysign.8.out $(DESTDIR)$(mandir)/$(mansubdir)8/hamssh-keysign.8
+	$(INSTALL) -m 644 hamssh-pkcs11-helper.8.out $(DESTDIR)$(mandir)/$(mansubdir)8/hamssh-pkcs11-helper.8
+	$(INSTALL) -m 644 hamssh-sk-helper.8.out $(DESTDIR)$(mandir)/$(mansubdir)8/hamssh-sk-helper.8
 
 install-sysconf:
 	$(MKDIR_P) $(DESTDIR)$(sysconfdir)
@@ -480,18 +480,18 @@ uninstall:
 	-rm -f $(DESTDIR)$(SSH_KEYSIGN)$(EXEEXT)
 	-rm -f $(DESTDIR)$(SSH_PKCS11_HELPER)$(EXEEXT)
 	-rm -f $(DESTDIR)$(SSH_SK_HELPER)$(EXEEXT)
-	-rm -f $(DESTDIR)$(mandir)/$(mansubdir)1/ssh.1
-	-rm -f $(DESTDIR)$(mandir)/$(mansubdir)1/scp.1
-	-rm -f $(DESTDIR)$(mandir)/$(mansubdir)1/ssh-add.1
-	-rm -f $(DESTDIR)$(mandir)/$(mansubdir)1/ssh-agent.1
-	-rm -f $(DESTDIR)$(mandir)/$(mansubdir)1/ssh-keygen.1
-	-rm -f $(DESTDIR)$(mandir)/$(mansubdir)1/sftp.1
-	-rm -f $(DESTDIR)$(mandir)/$(mansubdir)1/ssh-keyscan.1
-	-rm -f $(DESTDIR)$(mandir)/$(mansubdir)8/sshd.8
-	-rm -f $(DESTDIR)$(mandir)/$(mansubdir)8/sftp-server.8
-	-rm -f $(DESTDIR)$(mandir)/$(mansubdir)8/ssh-keysign.8
-	-rm -f $(DESTDIR)$(mandir)/$(mansubdir)8/ssh-pkcs11-helper.8
-	-rm -f $(DESTDIR)$(mandir)/$(mansubdir)8/ssh-sk-helper.8
+	-rm -f $(DESTDIR)$(mandir)/$(mansubdir)1/hamssh.1
+	-rm -f $(DESTDIR)$(mandir)/$(mansubdir)1/hamscp.1
+	-rm -f $(DESTDIR)$(mandir)/$(mansubdir)1/hamssh-add.1
+	-rm -f $(DESTDIR)$(mandir)/$(mansubdir)1/hamssh-agent.1
+	-rm -f $(DESTDIR)$(mandir)/$(mansubdir)1/hamssh-keygen.1
+	-rm -f $(DESTDIR)$(mandir)/$(mansubdir)1/hamsftp.1
+	-rm -f $(DESTDIR)$(mandir)/$(mansubdir)1/hamssh-keyscan.1
+	-rm -f $(DESTDIR)$(mandir)/$(mansubdir)8/hamsshd.8
+	-rm -f $(DESTDIR)$(mandir)/$(mansubdir)8/hamsftp-server.8
+	-rm -f $(DESTDIR)$(mandir)/$(mansubdir)8/hamssh-keysign.8
+	-rm -f $(DESTDIR)$(mandir)/$(mansubdir)8/hamssh-pkcs11-helper.8
+	-rm -f $(DESTDIR)$(mandir)/$(mansubdir)8/hamssh-sk-helper.8
 
 regress-prep:
 	$(MKDIR_P) `pwd`/regress/unittests/test_helper

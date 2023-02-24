@@ -1,4 +1,4 @@
-.\" $OpenBSD: ssh-agent.1,v 1.75 2022/10/07 06:00:58 jmc Exp $
+.\" $OpenBSD: hamssh-agent.1,v 1.75 2022/10/07 06:00:58 jmc Exp $
 .\"
 .\" Author: Tatu Ylonen <ylo@cs.hut.fi>
 .\" Copyright (c) 1995 Tatu Ylonen <ylo@cs.hut.fi>, Espoo, Finland
@@ -38,10 +38,10 @@
 .Dt SSH-AGENT 1
 .Os
 .Sh NAME
-.Nm ssh-agent
+.Nm hamssh-agent
 .Nd OpenSSH authentication agent
 .Sh SYNOPSIS
-.Nm ssh-agent
+.Nm hamssh-agent
 .Op Fl c | s
 .Op Fl \&Dd
 .Op Fl a Ar bind_address
@@ -49,14 +49,14 @@
 .Op Fl O Ar option
 .Op Fl P Ar allowed_providers
 .Op Fl t Ar life
-.Nm ssh-agent
+.Nm hamssh-agent
 .Op Fl a Ar bind_address
 .Op Fl E Ar fingerprint_hash
 .Op Fl O Ar option
 .Op Fl P Ar allowed_providers
 .Op Fl t Ar life
 .Ar command Op Ar arg ...
-.Nm ssh-agent
+.Nm hamssh-agent
 .Op Fl c | s
 .Fl k
 .Sh DESCRIPTION
@@ -65,7 +65,7 @@ is a program to hold private keys used for public key authentication.
 Through use of environment variables the agent can be located
 and automatically used for authentication when logging in to other
 machines using
-.Xr ssh 1 .
+.Xr hamssh 1 .
 .Pp
 The options are as follows:
 .Bl -tag -width Ds
@@ -75,7 +75,7 @@ Bind the agent to the
 socket
 .Ar bind_address .
 The default is
-.Pa $TMPDIR/ssh-XXXXXXXXXX/agent.\*(Ltppid\*(Gt .
+.Pa $TMPDIR/hamssh-XXXXXXXXXX/agent.\*(Ltppid\*(Gt .
 .It Fl c
 Generate C-shell commands on
 .Dv stdout .
@@ -117,11 +117,11 @@ By default,
 .Nm
 refuses signature requests for FIDO keys where the key application string
 does not start with
-.Dq ssh:
+.Dq hamssh:
 and when the data to be signed does not appear to be a
-.Xr ssh 1
+.Xr hamssh 1
 user authentication request or a
-.Xr ssh-keygen 1
+.Xr hamssh-keygen 1
 signature.
 The default behaviour prevents forwarded access to a FIDO key from also
 implicitly forwarding the ability to authenticate to websites.
@@ -132,10 +132,10 @@ authenticator middleware shared libraries that may be used with the
 or
 .Fl s
 options to
-.Xr ssh-add 1 .
+.Xr hamssh-add 1 .
 Libraries that do not match the pattern list will be refused.
 See PATTERNS in
-.Xr ssh_config 5
+.Xr hamssh_config 5
 for a description of pattern-list syntax.
 The default list is
 .Dq /usr/lib/*,/usr/local/lib/* .
@@ -148,9 +148,9 @@ does not look like it's a csh style of shell.
 .It Fl t Ar life
 Set a default value for the maximum lifetime of identities added to the agent.
 The lifetime may be specified in seconds or in a time format specified in
-.Xr sshd_config 5 .
+.Xr hamsshd_config 5 .
 A lifetime specified for an identity with
-.Xr ssh-add 1
+.Xr hamssh-add 1
 overrides this value.
 Without this option the default maximum lifetime is forever.
 .It Ar command Op Ar arg ...
@@ -167,7 +167,7 @@ where all other windows or programs are started as children of the
 program.
 The agent starts a command under which its environment
 variables are exported, for example
-.Cm ssh-agent xterm & .
+.Cm hamssh-agent xterm & .
 When the command terminates, so does the agent.
 .Pp
 The second method is used for a login session.
@@ -176,28 +176,28 @@ When
 is started,
 it prints the shell commands required to set its environment variables,
 which in turn can be evaluated in the calling shell, for example
-.Cm eval `ssh-agent -s` .
+.Cm eval `hamssh-agent -s` .
 .Pp
 In both cases,
-.Xr ssh 1
+.Xr hamssh 1
 looks at these environment variables
 and uses them to establish a connection to the agent.
 .Pp
 The agent initially does not have any private keys.
 Keys are added using
-.Xr ssh-add 1
+.Xr hamssh-add 1
 or by
-.Xr ssh 1
+.Xr hamssh 1
 when
 .Cm AddKeysToAgent
 is set in
-.Xr ssh_config 5 .
+.Xr hamssh_config 5 .
 Multiple identities may be stored in
 .Nm
 concurrently and
-.Xr ssh 1
+.Xr hamssh 1
 will automatically use them if present.
-.Xr ssh-add 1
+.Xr hamssh-add 1
 is also used to remove keys from
 .Nm
 and to query the keys that are held in one.
@@ -207,7 +207,7 @@ Connections to
 may be forwarded from further remote hosts using the
 .Fl A
 option to
-.Xr ssh 1
+.Xr hamssh 1
 (but see the caveats documented therein),
 avoiding the need for authentication data to be stored on other machines.
 Authentication passphrases and private keys never go over the network:
@@ -232,18 +232,18 @@ but is easily abused by root or another instance of the same user.
 .El
 .Sh FILES
 .Bl -tag -width Ds
-.It Pa $TMPDIR/ssh-XXXXXXXXXX/agent.<ppid>
+.It Pa $TMPDIR/hamssh-XXXXXXXXXX/agent.<ppid>
 .Ux Ns -domain
 sockets used to contain the connection to the authentication agent.
 These sockets should only be readable by the owner.
 The sockets should get automatically removed when the agent exits.
 .El
 .Sh SEE ALSO
-.Xr ssh 1 ,
-.Xr ssh-add 1 ,
-.Xr ssh-keygen 1 ,
-.Xr ssh_config 5 ,
-.Xr sshd 8
+.Xr hamssh 1 ,
+.Xr hamssh-add 1 ,
+.Xr hamssh-keygen 1 ,
+.Xr hamssh_config 5 ,
+.Xr hamsshd 8
 .Sh AUTHORS
 .An -nosplit
 OpenSSH is a derivative of the original and free ssh 1.2.12 release by

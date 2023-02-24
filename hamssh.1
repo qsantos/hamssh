@@ -38,10 +38,10 @@
 .Dt SSH 1
 .Os
 .Sh NAME
-.Nm ssh
+.Nm hamssh
 .Nd OpenSSH remote login client
 .Sh SYNOPSIS
-.Nm ssh
+.Nm hamssh
 .Op Fl 46AaCfGgKkMNnqsTtVvXxYy
 .Op Fl B Ar bind_interface
 .Op Fl b Ar bind_address
@@ -85,7 +85,7 @@ which may be specified as either
 .Sm on
 or a URI of the form
 .Sm off
-.No ssh:// Oo user @ Oc hostname Op : port .
+.No hamssh:// Oo user @ Oc hostname Op : port .
 .Sm on
 The user must prove
 their identity to the remote machine using one of several methods
@@ -116,7 +116,7 @@ to use IPv6 addresses only.
 .Pp
 .It Fl A
 Enables forwarding of connections from an authentication agent such as
-.Xr ssh-agent 1 .
+.Xr hamssh-agent 1 .
 This can also be specified on a per-host basis in a configuration file.
 .Pp
 Agent forwarding should be enabled with caution.
@@ -160,7 +160,7 @@ The default value can be set on a host-by-host basis in the
 configuration files; see the
 .Cm Compression
 option in
-.Xr ssh_config 5 .
+.Xr hamssh_config 5 .
 .Pp
 .It Fl c Ar cipher_spec
 Selects the cipher specification for encrypting the session.
@@ -170,7 +170,7 @@ listed in order of preference.
 See the
 .Cm Ciphers
 keyword in
-.Xr ssh_config 5
+.Xr hamssh_config 5
 for more information.
 .Pp
 .It Fl D Xo
@@ -235,10 +235,10 @@ disables any escapes and makes the session fully transparent.
 Specifies an alternative per-user configuration file.
 If a configuration file is given on the command line,
 the system-wide configuration file
-.Pq Pa /etc/ssh/ssh_config
+.Pq Pa /etc/hamssh/hamssh_config
 will be ignored.
 The default for the per-user configuration file is
-.Pa ~/.ssh/config .
+.Pa ~/.hamssh/config .
 If set to
 .Dq none ,
 no configuration files will be read.
@@ -255,7 +255,7 @@ This implies
 .Fl n .
 The recommended way to start X11 programs at a remote site is with
 something like
-.Ic ssh -f host xterm .
+.Ic hamssh -f host xterm .
 .Pp
 If the
 .Cm ExitOnForwardFailure
@@ -268,7 +268,7 @@ before placing itself in the background.
 Refer to the description of
 .Cm ForkAfterAuthentication
 in
-.Xr ssh_config 5
+.Xr hamssh_config 5
 for details.
 .Pp
 .It Fl G
@@ -296,16 +296,16 @@ Selects a file from which the identity (private key) for
 public key authentication is read.
 You can also specify a public key file to use the corresponding
 private key that is loaded in
-.Xr ssh-agent 1
+.Xr hamssh-agent 1
 when the private key file is not present locally.
 The default is
-.Pa ~/.ssh/id_rsa ,
-.Pa ~/.ssh/id_ecdsa ,
-.Pa ~/.ssh/id_ecdsa_sk ,
-.Pa ~/.ssh/id_ed25519 ,
-.Pa ~/.ssh/id_ed25519_sk
+.Pa ~/.hamssh/id_rsa ,
+.Pa ~/.hamssh/id_ecdsa ,
+.Pa ~/.hamssh/id_ecdsa_sk ,
+.Pa ~/.hamssh/id_ed25519 ,
+.Pa ~/.hamssh/id_ed25519_sk
 and
-.Pa ~/.ssh/id_dsa .
+.Pa ~/.hamssh/id_dsa .
 Identity files may also be specified on
 a per-host basis in the configuration file.
 It is possible to have multiple
@@ -335,7 +335,7 @@ configuration directive.
 Note that configuration directives supplied on the command-line generally
 apply to the destination host and not any specified jump hosts.
 Use
-.Pa ~/.ssh/config
+.Pa ~/.hamssh/config
 to specify configuration for jump hosts.
 .Pp
 .It Fl K
@@ -421,13 +421,13 @@ options places
 into
 .Dq master
 mode but with confirmation required using
-.Xr ssh-askpass 1
+.Xr hamssh-askpass 1
 before each operation that changes the multiplexing state
 (e.g. opening a new session).
 Refer to the description of
 .Cm ControlMaster
 in
-.Xr ssh_config 5
+.Xr hamssh_config 5
 for details.
 .Pp
 .It Fl m Ar mac_spec
@@ -436,7 +436,7 @@ specified in order of preference.
 See the
 .Cm MACs
 keyword in
-.Xr ssh_config 5
+.Xr hamssh_config 5
 for more information.
 .Pp
 .It Fl N
@@ -445,7 +445,7 @@ This is useful for just forwarding ports.
 Refer to the description of
 .Cm SessionType
 in
-.Xr ssh_config 5
+.Xr hamssh_config 5
 for details.
 .Pp
 .It Fl n
@@ -457,7 +457,7 @@ This must be used when
 is run in the background.
 A common trick is to use this to run X11 programs on a remote machine.
 For example,
-.Ic ssh -n shadows.cs.hut.fi emacs &
+.Ic hamssh -n shadows.cs.hut.fi emacs &
 will start an emacs on shadows.cs.hut.fi, and the X11
 connection will be automatically forwarded over an encrypted channel.
 The
@@ -471,7 +471,7 @@ option.)
 Refer to the description of
 .Cm StdinNull
 in
-.Xr ssh_config 5
+.Xr hamssh_config 5
 for details.
 .Pp
 .It Fl O Ar ctl_cmd
@@ -498,7 +498,7 @@ Can be used to give options in the format used in the configuration file.
 This is useful for specifying options for which there is no separate
 command-line flag.
 For full details of the options listed below, and their possible values, see
-.Xr ssh_config 5 .
+.Xr hamssh_config 5 .
 .Pp
 .Bl -tag -width Ds -offset indent -compact
 .It AddKeysToAgent
@@ -625,9 +625,9 @@ flag),
 .Ar sig
 (supported signature algorithms).
 Alternatively, any keyword from
-.Xr ssh_config 5
+.Xr hamssh_config 5
 or
-.Xr sshd_config 5
+.Xr hamsshd_config 5
 that takes an algorithm list may be used as an alias for the corresponding
 query_option.
 .Pp
@@ -701,7 +701,7 @@ Specifying a remote
 will only succeed if the server's
 .Cm GatewayPorts
 option is enabled (see
-.Xr sshd_config 5 ) .
+.Xr hamsshd_config 5 ) .
 .Pp
 If the
 .Ar port
@@ -723,19 +723,19 @@ Refer to the description of
 and
 .Cm ControlMaster
 in
-.Xr ssh_config 5
+.Xr hamssh_config 5
 for details.
 .Pp
 .It Fl s
 May be used to request invocation of a subsystem on the remote system.
 Subsystems facilitate the use of SSH
 as a secure transport for other applications (e.g.\&
-.Xr sftp 1 ) .
+.Xr hamsftp 1 ) .
 The subsystem is specified as the remote command.
 Refer to the description of
 .Cm SessionType
 in
-.Xr ssh_config 5
+.Xr hamssh_config 5
 for details.
 .Pp
 .It Fl T
@@ -807,7 +807,7 @@ See also the
 and
 .Cm TunnelDevice
 directives in
-.Xr ssh_config 5 .
+.Xr hamssh_config 5 .
 .Pp
 If the
 .Cm Tunnel
@@ -836,7 +836,7 @@ Refer to the
 option and the
 .Cm ForwardX11Trusted
 directive in
-.Xr ssh_config 5
+.Xr hamssh_config 5
 for more information.
 .Pp
 .It Fl x
@@ -858,7 +858,7 @@ By default this information is sent to stderr.
 may additionally obtain configuration data from
 a per-user configuration file and a system-wide configuration file.
 The file format and configuration options are described in
-.Xr ssh_config 5 .
+.Xr hamssh_config 5 .
 .Sh AUTHENTICATION
 The OpenSSH SSH client supports SSH protocol 2.
 .Pp
@@ -891,9 +891,9 @@ Additionally, the server
 .Em must
 be able to verify the client's
 host key (see the description of
-.Pa /etc/ssh/ssh_known_hosts
+.Pa /etc/hamssh/hamssh_known_hosts
 and
-.Pa ~/.ssh/known_hosts ,
+.Pa ~/.hamssh/known_hosts ,
 below)
 for login to be permitted.
 This authentication method closes security holes due to IP
@@ -920,7 +920,7 @@ The HISTORY section of
 contains a brief discussion of the DSA and RSA algorithms.
 .Pp
 The file
-.Pa ~/.ssh/authorized_keys
+.Pa ~/.hamssh/authorized_keys
 lists the public keys that are permitted for logging in.
 When the user logs in, the
 .Nm
@@ -942,39 +942,39 @@ or higher (e.g. by using the
 flag).
 .Pp
 The user creates their key pair by running
-.Xr ssh-keygen 1 .
+.Xr hamssh-keygen 1 .
 This stores the private key in
-.Pa ~/.ssh/id_dsa
+.Pa ~/.hamssh/id_dsa
 (DSA),
-.Pa ~/.ssh/id_ecdsa
+.Pa ~/.hamssh/id_ecdsa
 (ECDSA),
-.Pa ~/.ssh/id_ecdsa_sk
+.Pa ~/.hamssh/id_ecdsa_sk
 (authenticator-hosted ECDSA),
-.Pa ~/.ssh/id_ed25519
+.Pa ~/.hamssh/id_ed25519
 (Ed25519),
-.Pa ~/.ssh/id_ed25519_sk
+.Pa ~/.hamssh/id_ed25519_sk
 (authenticator-hosted Ed25519),
 or
-.Pa ~/.ssh/id_rsa
+.Pa ~/.hamssh/id_rsa
 (RSA)
 and stores the public key in
-.Pa ~/.ssh/id_dsa.pub
+.Pa ~/.hamssh/id_dsa.pub
 (DSA),
-.Pa ~/.ssh/id_ecdsa.pub
+.Pa ~/.hamssh/id_ecdsa.pub
 (ECDSA),
-.Pa ~/.ssh/id_ecdsa_sk.pub
+.Pa ~/.hamssh/id_ecdsa_sk.pub
 (authenticator-hosted ECDSA),
-.Pa ~/.ssh/id_ed25519.pub
+.Pa ~/.hamssh/id_ed25519.pub
 (Ed25519),
-.Pa ~/.ssh/id_ed25519_sk.pub
+.Pa ~/.hamssh/id_ed25519_sk.pub
 (authenticator-hosted Ed25519),
 or
-.Pa ~/.ssh/id_rsa.pub
+.Pa ~/.hamssh/id_rsa.pub
 (RSA)
 in the user's home directory.
 The user should then copy the public key
 to
-.Pa ~/.ssh/authorized_keys
+.Pa ~/.hamssh/authorized_keys
 in their home directory on the remote machine.
 The
 .Pa authorized_keys
@@ -991,17 +991,17 @@ signed certificates are used.
 This has the advantage that a single trusted certification authority
 can be used in place of many public/private keys.
 See the CERTIFICATES section of
-.Xr ssh-keygen 1
+.Xr hamssh-keygen 1
 for more information.
 .Pp
 The most convenient way to use public key or certificate authentication
 may be with an authentication agent.
 See
-.Xr ssh-agent 1
+.Xr hamssh-agent 1
 and (optionally) the
 .Cm AddKeysToAgent
 directive in
-.Xr ssh_config 5
+.Xr hamssh_config 5
 for more information.
 .Pp
 Keyboard-interactive authentication works as follows:
@@ -1027,10 +1027,10 @@ the password cannot be seen by someone listening on the network.
 automatically maintains and checks a database containing
 identification for all hosts it has ever been used with.
 Host keys are stored in
-.Pa ~/.ssh/known_hosts
+.Pa ~/.hamssh/hamknown_hosts
 in the user's home directory.
 Additionally, the file
-.Pa /etc/ssh/ssh_known_hosts
+.Pa /etc/hamssh/hamssh_known_hosts
 is automatically checked for known hosts.
 Any new hosts are automatically added to the user's file.
 If a host's identification ever changes,
@@ -1133,7 +1133,7 @@ for dynamic port-forwardings.
 allows the user to execute a local command if the
 .Ic PermitLocalCommand
 option is enabled in
-.Xr ssh_config 5 .
+.Xr hamssh_config 5 .
 Basic help is available, using the
 .Fl h
 option.
@@ -1176,7 +1176,7 @@ nickname
 .Dq pinky ,
 using the standard IRC port, 6667:
 .Bd -literal -offset 4n
-$ ssh -f -L 6667:localhost:6667 server.example.com sleep 10
+$ hamssh -f -L 6667:localhost:6667 server.example.com sleep 10
 $ irc -c '#users' pinky IRC/127.0.0.1
 .Ed
 .Pp
@@ -1254,14 +1254,14 @@ a fingerprint of the server's public key is presented to the user
 .Cm StrictHostKeyChecking
 has been disabled).
 Fingerprints can be determined using
-.Xr ssh-keygen 1 :
+.Xr hamssh-keygen 1 :
 .Pp
-.Dl $ ssh-keygen -l -f /etc/ssh/ssh_host_rsa_key
+.Dl $ hamssh-keygen -l -f /etc/hamssh/hamssh_host_rsa_key
 .Pp
 If the fingerprint is already known, it can be matched
 and the key can be accepted or rejected.
 If only legacy (MD5) fingerprints for the server are available, the
-.Xr ssh-keygen 1
+.Xr hamssh-keygen 1
 .Fl E
 option may be used to downgrade the fingerprint algorithm to match.
 .Pp
@@ -1286,7 +1286,7 @@ host key is the same, not guaranteed proof.
 To get a listing of the fingerprints along with their random art for
 all known hosts, the following command line can be used:
 .Pp
-.Dl $ ssh-keygen -lv -f ~/.ssh/known_hosts
+.Dl $ hamssh-keygen -lv -f ~/.hamssh/known_hosts
 .Pp
 If the fingerprint is unknown,
 an alternative method of verification is available:
@@ -1302,7 +1302,7 @@ In this example, we are connecting a client to a server,
 The SSHFP resource records should first be added to the zonefile for
 host.example.com:
 .Bd -literal -offset indent
-$ ssh-keygen -r host.example.com.
+$ hamssh-keygen -r host.example.com.
 .Ed
 .Pp
 The output lines will have to be added to the zonefile.
@@ -1312,7 +1312,7 @@ To check that the zone is answering fingerprint queries:
 .Pp
 Finally the client connects:
 .Bd -literal -offset indent
-$ ssh -o "VerifyHostKeyDNS ask" host.example.com
+$ hamssh -o "VerifyHostKeyDNS ask" host.example.com
 [...]
 Matching host key fingerprint found in DNS.
 Are you sure you want to continue connecting (yes/no)?
@@ -1321,7 +1321,7 @@ Are you sure you want to continue connecting (yes/no)?
 See the
 .Cm VerifyHostKeyDNS
 option in
-.Xr ssh_config 5
+.Xr hamssh_config 5
 for more information.
 .Sh SSH-BASED VIRTUAL PRIVATE NETWORKS
 .Nm
@@ -1331,7 +1331,7 @@ using the
 network pseudo-device,
 allowing two networks to be joined securely.
 The
-.Xr sshd_config 5
+.Xr hamsshd_config 5
 configuration option
 .Cm PermitTunnel
 controls whether the server supports this,
@@ -1345,7 +1345,7 @@ at 192.168.1.15, allows it.
 .Pp
 On the client:
 .Bd -literal -offset indent
-# ssh -f -w 0:1 192.168.1.15 true
+# hamssh -f -w 0:1 192.168.1.15 true
 # ifconfig tun0 10.1.1.1 10.1.1.2 netmask 255.255.255.252
 # route add 10.0.99.0/24 10.1.1.2
 .Ed
@@ -1357,7 +1357,7 @@ On the server:
 .Ed
 .Pp
 Client access may be more finely tuned via the
-.Pa /root/.ssh/authorized_keys
+.Pa /root/.hamssh/authorized_keys
 file (see below) and the
 .Cm PermitRootLogin
 server option.
@@ -1372,8 +1372,8 @@ if
 is set to
 .Dq forced-commands-only :
 .Bd -literal -offset 2n
-tunnel="1",command="sh /etc/netstart tun1" ssh-rsa ... jane
-tunnel="2",command="sh /etc/netstart tun2" ssh-rsa ... john
+tunnel="1",command="sh /etc/netstart tun1" hamssh-rsa ... jane
+tunnel="2",command="sh /etc/netstart tun2" hamssh-rsa ... john
 .Ed
 .Pp
 Since an SSH-based setup entails a fair amount of overhead,
@@ -1483,12 +1483,12 @@ If the current session has no tty,
 this variable is not set.
 .It Ev SSH_TUNNEL
 Optionally set by
-.Xr sshd 8
+.Xr hamsshd 8
 to contain the interface names assigned if tunnel forwarding was
 requested by the client.
 .It Ev SSH_USER_AUTH
 Optionally set by
-.Xr sshd 8 ,
+.Xr hamsshd 8 ,
 this variable may contain a pathname to a file that lists the authentication
 methods successfully used when the session was established, including any
 public keys that were used.
@@ -1503,7 +1503,7 @@ Set to the name of the user logging in.
 Additionally,
 .Nm
 reads
-.Pa ~/.ssh/environment ,
+.Pa ~/.hamssh/environment ,
 and adds lines of the format
 .Dq VARNAME=value
 to the environment if the file exists and users are allowed to
@@ -1511,7 +1511,7 @@ change their environment.
 For more information, see the
 .Cm PermitUserEnvironment
 option in
-.Xr sshd_config 5 .
+.Xr hamsshd_config 5 .
 .Sh FILES
 .Bl -tag -width Ds -compact
 .It Pa ~/.rhosts
@@ -1519,7 +1519,7 @@ This file is used for host-based authentication (see above).
 On some machines this file may need to be
 world-readable if the user's home directory is on an NFS partition,
 because
-.Xr sshd 8
+.Xr hamsshd 8
 reads it as root.
 Additionally, this file must be owned by the user,
 and must not have write permissions for anyone else.
@@ -1533,40 +1533,40 @@ This file is used in exactly the same way as
 but allows host-based authentication without permitting login with
 rlogin/rsh.
 .Pp
-.It Pa ~/.ssh/
+.It Pa ~/.hamssh/
 This directory is the default location for all user-specific configuration
 and authentication information.
 There is no general requirement to keep the entire contents of this directory
 secret, but the recommended permissions are read/write/execute for the user,
 and not accessible by others.
 .Pp
-.It Pa ~/.ssh/authorized_keys
+.It Pa ~/.hamssh/authorized_keys
 Lists the public keys (DSA, ECDSA, Ed25519, RSA)
 that can be used for logging in as this user.
 The format of this file is described in the
-.Xr sshd 8
+.Xr hamsshd 8
 manual page.
 This file is not highly sensitive, but the recommended
 permissions are read/write for the user, and not accessible by others.
 .Pp
-.It Pa ~/.ssh/config
+.It Pa ~/.hamssh/config
 This is the per-user configuration file.
 The file format and configuration options are described in
-.Xr ssh_config 5 .
+.Xr hamssh_config 5 .
 Because of the potential for abuse, this file must have strict permissions:
 read/write for the user, and not writable by others.
 .Pp
-.It Pa ~/.ssh/environment
+.It Pa ~/.hamssh/environment
 Contains additional definitions for environment variables; see
 .Sx ENVIRONMENT ,
 above.
 .Pp
-.It Pa ~/.ssh/id_dsa
-.It Pa ~/.ssh/id_ecdsa
-.It Pa ~/.ssh/id_ecdsa_sk
-.It Pa ~/.ssh/id_ed25519
-.It Pa ~/.ssh/id_ed25519_sk
-.It Pa ~/.ssh/id_rsa
+.It Pa ~/.hamssh/id_dsa
+.It Pa ~/.hamssh/id_ecdsa
+.It Pa ~/.hamssh/id_ecdsa_sk
+.It Pa ~/.hamssh/id_ed25519
+.It Pa ~/.hamssh/id_ed25519_sk
+.It Pa ~/.hamssh/id_rsa
 Contains the private key for authentication.
 These files
 contain sensitive data and should be readable by the user but not
@@ -1577,30 +1577,30 @@ It is possible to specify a passphrase when
 generating the key which will be used to encrypt the
 sensitive part of this file using AES-128.
 .Pp
-.It Pa ~/.ssh/id_dsa.pub
-.It Pa ~/.ssh/id_ecdsa.pub
-.It Pa ~/.ssh/id_ecdsa_sk.pub
-.It Pa ~/.ssh/id_ed25519.pub
-.It Pa ~/.ssh/id_ed25519_sk.pub
-.It Pa ~/.ssh/id_rsa.pub
+.It Pa ~/.hamssh/id_dsa.pub
+.It Pa ~/.hamssh/id_ecdsa.pub
+.It Pa ~/.hamssh/id_ecdsa_sk.pub
+.It Pa ~/.hamssh/id_ed25519.pub
+.It Pa ~/.hamssh/id_ed25519_sk.pub
+.It Pa ~/.hamssh/id_rsa.pub
 Contains the public key for authentication.
 These files are not
 sensitive and can (but need not) be readable by anyone.
 .Pp
-.It Pa ~/.ssh/known_hosts
+.It Pa ~/.hamssh/known_hosts
 Contains a list of host keys for all hosts the user has logged into
 that are not already in the systemwide list of known host keys.
 See
-.Xr sshd 8
+.Xr hamsshd 8
 for further details of the format of this file.
 .Pp
-.It Pa ~/.ssh/rc
+.It Pa ~/.hamssh/rc
 Commands in this file are executed by
 .Nm
 when the user logs in, just before the user's shell (or command) is
 started.
 See the
-.Xr sshd 8
+.Xr hamsshd 8
 manual page for more information.
 .Pp
 .It Pa /etc/hosts.equiv
@@ -1613,35 +1613,35 @@ This file is used in exactly the same way as
 but allows host-based authentication without permitting login with
 rlogin/rsh.
 .Pp
-.It Pa /etc/ssh/ssh_config
+.It Pa /etc/hamssh/hamssh_config
 Systemwide configuration file.
 The file format and configuration options are described in
-.Xr ssh_config 5 .
+.Xr hamssh_config 5 .
 .Pp
-.It Pa /etc/ssh/ssh_host_key
-.It Pa /etc/ssh/ssh_host_dsa_key
-.It Pa /etc/ssh/ssh_host_ecdsa_key
-.It Pa /etc/ssh/ssh_host_ed25519_key
-.It Pa /etc/ssh/ssh_host_rsa_key
+.It Pa /etc/hamssh/hamssh_host_key
+.It Pa /etc/hamssh/hamssh_host_dsa_key
+.It Pa /etc/hamssh/hamssh_host_ecdsa_key
+.It Pa /etc/hamssh/hamssh_host_ed25519_key
+.It Pa /etc/hamssh/hamssh_host_rsa_key
 These files contain the private parts of the host keys
 and are used for host-based authentication.
 .Pp
-.It Pa /etc/ssh/ssh_known_hosts
+.It Pa /etc/hamssh/hamssh_known_hosts
 Systemwide list of known host keys.
 This file should be prepared by the
 system administrator to contain the public host keys of all machines in the
 organization.
 It should be world-readable.
 See
-.Xr sshd 8
+.Xr hamsshd 8
 for further details of the format of this file.
 .Pp
-.It Pa /etc/ssh/sshrc
+.It Pa /etc/hamssh/hamsshrc
 Commands in this file are executed by
 .Nm
 when the user logs in, just before the user's shell (or command) is started.
 See the
-.Xr sshd 8
+.Xr hamsshd 8
 manual page for more information.
 .El
 .Sh EXIT STATUS
@@ -1649,16 +1649,16 @@ manual page for more information.
 exits with the exit status of the remote command or with 255
 if an error occurred.
 .Sh SEE ALSO
-.Xr scp 1 ,
-.Xr sftp 1 ,
-.Xr ssh-add 1 ,
-.Xr ssh-agent 1 ,
-.Xr ssh-keygen 1 ,
-.Xr ssh-keyscan 1 ,
+.Xr hamscp 1 ,
+.Xr hamsftp 1 ,
+.Xr hamssh-add 1 ,
+.Xr hamssh-agent 1 ,
+.Xr hamssh-keygen 1 ,
+.Xr hamssh-keyscan 1 ,
 .Xr tun 4 ,
-.Xr ssh_config 5 ,
-.Xr ssh-keysign 8 ,
-.Xr sshd 8
+.Xr hamssh_config 5 ,
+.Xr hamssh-keysign 8 ,
+.Xr hamsshd 8
 .Sh STANDARDS
 .Rs
 .%A S. Lehtinen

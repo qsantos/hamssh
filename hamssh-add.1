@@ -1,4 +1,4 @@
-.\"	$OpenBSD: ssh-add.1,v 1.84 2022/02/04 02:49:17 dtucker Exp $
+.\"	$OpenBSD: hamssh-add.1,v 1.84 2022/02/04 02:49:17 dtucker Exp $
 .\"
 .\" Author: Tatu Ylonen <ylo@cs.hut.fi>
 .\" Copyright (c) 1995 Tatu Ylonen <ylo@cs.hut.fi>, Espoo, Finland
@@ -39,10 +39,10 @@
 .Dt SSH-ADD 1
 .Os
 .Sh NAME
-.Nm ssh-add
+.Nm hamssh-add
 .Nd adds private key identities to the OpenSSH authentication agent
 .Sh SYNOPSIS
-.Nm ssh-add
+.Nm hamssh-add
 .Op Fl cDdKkLlqvXx
 .Op Fl E Ar fingerprint_hash
 .Op Fl H Ar hostkey_file
@@ -50,25 +50,25 @@
 .Op Fl S Ar provider
 .Op Fl t Ar life
 .Op Ar
-.Nm ssh-add
+.Nm hamssh-add
 .Fl s Ar pkcs11
-.Nm ssh-add
+.Nm hamssh-add
 .Fl e Ar pkcs11
-.Nm ssh-add
+.Nm hamssh-add
 .Fl T
 .Ar pubkey ...
 .Sh DESCRIPTION
 .Nm
 adds private key identities to the authentication agent,
-.Xr ssh-agent 1 .
+.Xr hamssh-agent 1 .
 When run without arguments, it adds the files
-.Pa ~/.ssh/id_rsa ,
-.Pa ~/.ssh/id_ecdsa ,
-.Pa ~/.ssh/id_ecdsa_sk ,
-.Pa ~/.ssh/id_ed25519 ,
-.Pa ~/.ssh/id_ed25519_sk ,
+.Pa ~/.hamssh/id_rsa ,
+.Pa ~/.hamssh/id_ecdsa ,
+.Pa ~/.hamssh/id_ecdsa_sk ,
+.Pa ~/.hamssh/id_ed25519 ,
+.Pa ~/.hamssh/id_ed25519_sk ,
 and
-.Pa ~/.ssh/id_dsa .
+.Pa ~/.hamssh/id_dsa .
 After loading a private key,
 .Nm
 will try to load corresponding certificate information from the
@@ -96,9 +96,9 @@ The options are as follows:
 Indicates that added identities should be subject to confirmation before
 being used for authentication.
 Confirmation is performed by
-.Xr ssh-askpass 1 .
+.Xr hamssh-askpass 1 .
 Successful confirmation is signaled by a zero exit status from
-.Xr ssh-askpass 1 ,
+.Xr hamssh-askpass 1 ,
 rather than text entered into the requester.
 .It Fl D
 Deletes all identities from the agent.
@@ -141,13 +141,13 @@ searched.
 If no files are specified,
 .Nm
 will use the default
-.Xr ssh_config 5
+.Xr hamssh_config 5
 known hosts files:
-.Pa ~/.ssh/known_hosts ,
-.Pa ~/.ssh/known_hosts2 ,
-.Pa /etc/ssh/ssh_known_hosts ,
+.Pa ~/.hamssh/hamknown_hosts ,
+.Pa ~/.hamssh/hamknown_hosts2 ,
+.Pa /etc/hamssh/hamssh_known_hosts ,
 and
-.Pa /etc/ssh/ssh_known_hosts2 .
+.Pa /etc/hamssh/hamssh_known_hosts2 .
 .It Fl h Ar destination_constraint
 When adding keys, constrain them to be usable only through specific hosts or to
 specific destinations.
@@ -155,13 +155,13 @@ specific destinations.
 Destination constraints of the form
 .Sq [user@]dest-hostname
 permit use of the key only from the origin host (the one running
-.Xr ssh-agent 1 )
+.Xr hamssh-agent 1 )
 to the listed destination host, with optional user name.
 .Pp
 Constraints of the form
 .Sq src-hostname>[user@]dst-hostname
 allow a key available on a forwarded
-.Xr ssh-agent 1
+.Xr hamssh-agent 1
 to be used through a particular host (as specified by
 .Sq src-hostname )
 to authenticate to a further host,
@@ -171,7 +171,7 @@ specified by
 Multiple destination constraints may be added when loading keys.
 When attempting authentication with a key that has destination constraints,
 the whole connection path, including
-.Xr ssh-agent 1
+.Xr hamssh-agent 1
 forwarding, is tested against those constraints and each
 hop must be permitted for the attempt to succeed.
 For example, if key is forwarded to a remote host,
@@ -196,15 +196,15 @@ are not destination constrained.
 Destination constraints were added in OpenSSH release 8.9.
 Support in both the remote SSH client and server is required when using
 destination-constrained keys over a forwarded
-.Xr ssh-agent 1
+.Xr hamssh-agent 1
 channel.
 .Pp
 It is also important to note that destination constraints can only be
 enforced by
-.Xr ssh-agent 1
+.Xr hamssh-agent 1
 when a key is used, or when it is forwarded by a
 .Sy cooperating
-.Xr ssh 1 .
+.Xr hamssh 1 .
 Specifically, it does not prevent an attacker with access to a remote
 .Ev SSH_AUTH_SOCK
 from forwarding it again and using it on a different host (but only to
@@ -236,7 +236,7 @@ files are usable by performing sign and verify operations on each.
 Set a maximum lifetime when adding identities to an agent.
 The lifetime may be specified in seconds or in a time format
 specified in
-.Xr sshd_config 5 .
+.Xr hamsshd_config 5 .
 .It Fl v
 Verbose mode.
 Causes
@@ -268,7 +268,7 @@ and
 are set, it will execute the program specified by
 .Ev SSH_ASKPASS
 (by default
-.Dq ssh-askpass )
+.Dq hamssh-askpass )
 and open an X11 window to read the passphrase.
 This is particularly useful when calling
 .Nm
@@ -306,12 +306,12 @@ the built-in USB HID support.
 .El
 .Sh FILES
 .Bl -tag -width Ds -compact
-.It Pa ~/.ssh/id_dsa
-.It Pa ~/.ssh/id_ecdsa
-.It Pa ~/.ssh/id_ecdsa_sk
-.It Pa ~/.ssh/id_ed25519
-.It Pa ~/.ssh/id_ed25519_sk
-.It Pa ~/.ssh/id_rsa
+.It Pa ~/.hamssh/id_dsa
+.It Pa ~/.hamssh/id_ecdsa
+.It Pa ~/.hamssh/id_ecdsa_sk
+.It Pa ~/.hamssh/id_ed25519
+.It Pa ~/.hamssh/id_ed25519_sk
+.It Pa ~/.hamssh/id_rsa
 Contains the DSA, ECDSA, authenticator-hosted ECDSA, Ed25519,
 authenticator-hosted Ed25519 or RSA authentication identity of the user.
 .El
@@ -326,11 +326,11 @@ and 2 if
 .Nm
 is unable to contact the authentication agent.
 .Sh SEE ALSO
-.Xr ssh 1 ,
-.Xr ssh-agent 1 ,
-.Xr ssh-askpass 1 ,
-.Xr ssh-keygen 1 ,
-.Xr sshd 8
+.Xr hamssh 1 ,
+.Xr hamssh-agent 1 ,
+.Xr hamssh-askpass 1 ,
+.Xr hamssh-keygen 1 ,
+.Xr hamsshd 8
 .Sh AUTHORS
 OpenSSH is a derivative of the original and free
 ssh 1.2.12 release by Tatu Ylonen.

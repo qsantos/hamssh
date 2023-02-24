@@ -1,4 +1,4 @@
-.\"	$OpenBSD: ssh-keygen.1,v 1.227 2023/02/10 04:56:30 djm Exp $
+.\"	$OpenBSD: hamssh-keygen.1,v 1.227 2023/02/10 04:56:30 djm Exp $
 .\"
 .\" Author: Tatu Ylonen <ylo@cs.hut.fi>
 .\" Copyright (c) 1995 Tatu Ylonen <ylo@cs.hut.fi>, Espoo, Finland
@@ -39,10 +39,10 @@
 .Dt SSH-KEYGEN 1
 .Os
 .Sh NAME
-.Nm ssh-keygen
+.Nm hamssh-keygen
 .Nd OpenSSH authentication key utility
 .Sh SYNOPSIS
-.Nm ssh-keygen
+.Nm hamssh-keygen
 .Op Fl q
 .Op Fl a Ar rounds
 .Op Fl b Ar bits
@@ -54,7 +54,7 @@
 .Op Fl t Cm dsa | ecdsa | ecdsa-sk | ed25519 | ed25519-sk | rsa
 .Op Fl w Ar provider
 .Op Fl Z Ar cipher
-.Nm ssh-keygen
+.Nm hamssh-keygen
 .Fl p
 .Op Fl a Ar rounds
 .Op Fl f Ar keyfile
@@ -62,61 +62,61 @@
 .Op Fl N Ar new_passphrase
 .Op Fl P Ar old_passphrase
 .Op Fl Z Ar cipher
-.Nm ssh-keygen
+.Nm hamssh-keygen
 .Fl i
 .Op Fl f Ar input_keyfile
 .Op Fl m Ar key_format
-.Nm ssh-keygen
+.Nm hamssh-keygen
 .Fl e
 .Op Fl f Ar input_keyfile
 .Op Fl m Ar key_format
-.Nm ssh-keygen
+.Nm hamssh-keygen
 .Fl y
 .Op Fl f Ar input_keyfile
-.Nm ssh-keygen
+.Nm hamssh-keygen
 .Fl c
 .Op Fl a Ar rounds
 .Op Fl C Ar comment
 .Op Fl f Ar keyfile
 .Op Fl P Ar passphrase
-.Nm ssh-keygen
+.Nm hamssh-keygen
 .Fl l
 .Op Fl v
 .Op Fl E Ar fingerprint_hash
 .Op Fl f Ar input_keyfile
-.Nm ssh-keygen
+.Nm hamssh-keygen
 .Fl B
 .Op Fl f Ar input_keyfile
-.Nm ssh-keygen
+.Nm hamssh-keygen
 .Fl D Ar pkcs11
-.Nm ssh-keygen
+.Nm hamssh-keygen
 .Fl F Ar hostname
 .Op Fl lv
 .Op Fl f Ar known_hosts_file
-.Nm ssh-keygen
+.Nm hamssh-keygen
 .Fl H
 .Op Fl f Ar known_hosts_file
-.Nm ssh-keygen
+.Nm hamssh-keygen
 .Fl K
 .Op Fl a Ar rounds
 .Op Fl w Ar provider
-.Nm ssh-keygen
+.Nm hamssh-keygen
 .Fl R Ar hostname
 .Op Fl f Ar known_hosts_file
-.Nm ssh-keygen
+.Nm hamssh-keygen
 .Fl r Ar hostname
 .Op Fl g
 .Op Fl f Ar input_keyfile
-.Nm ssh-keygen
+.Nm hamssh-keygen
 .Fl M Cm generate
 .Op Fl O Ar option
 .Ar output_file
-.Nm ssh-keygen
+.Nm hamssh-keygen
 .Fl M Cm screen
 .Op Fl f Ar input_file
 .Op Fl O Ar option
 .Ar output_file
-.Nm ssh-keygen
+.Nm hamssh-keygen
 .Fl I Ar certificate_identity
 .Fl s Ar ca_key
 .Op Fl hU
@@ -126,46 +126,46 @@
 .Op Fl V Ar validity_interval
 .Op Fl z Ar serial_number
 .Ar
-.Nm ssh-keygen
+.Nm hamssh-keygen
 .Fl L
 .Op Fl f Ar input_keyfile
-.Nm ssh-keygen
+.Nm hamssh-keygen
 .Fl A
 .Op Fl a Ar rounds
 .Op Fl f Ar prefix_path
-.Nm ssh-keygen
+.Nm hamssh-keygen
 .Fl k
 .Fl f Ar krl_file
 .Op Fl u
 .Op Fl s Ar ca_public
 .Op Fl z Ar version_number
 .Ar
-.Nm ssh-keygen
+.Nm hamssh-keygen
 .Fl Q
 .Op Fl l
 .Fl f Ar krl_file
 .Ar
-.Nm ssh-keygen
+.Nm hamssh-keygen
 .Fl Y Cm find-principals
 .Op Fl O Ar option
 .Fl s Ar signature_file
 .Fl f Ar allowed_signers_file
-.Nm ssh-keygen
+.Nm hamssh-keygen
 .Fl Y Cm match-principals
 .Fl I Ar signer_identity
 .Fl f Ar allowed_signers_file
-.Nm ssh-keygen
+.Nm hamssh-keygen
 .Fl Y Cm check-novalidate
 .Op Fl O Ar option
 .Fl n Ar namespace
 .Fl s Ar signature_file
-.Nm ssh-keygen
+.Nm hamssh-keygen
 .Fl Y Cm sign
 .Op Fl O Ar option
 .Fl f Ar key_file
 .Fl n Ar namespace
 .Ar
-.Nm ssh-keygen
+.Nm hamssh-keygen
 .Fl Y Cm verify
 .Op Fl O Ar option
 .Fl f Ar allowed_signers_file
@@ -176,7 +176,7 @@
 .Sh DESCRIPTION
 .Nm
 generates, manages and converts authentication keys for
-.Xr ssh 1 .
+.Xr hamssh 1 .
 .Nm
 can create keys for use by SSH protocol version 2.
 .Pp
@@ -205,13 +205,13 @@ section for details.
 Normally each user wishing to use SSH
 with public key authentication runs this once to create the authentication
 key in
-.Pa ~/.ssh/id_dsa ,
-.Pa ~/.ssh/id_ecdsa ,
-.Pa ~/.ssh/id_ecdsa_sk ,
-.Pa ~/.ssh/id_ed25519 ,
-.Pa ~/.ssh/id_ed25519_sk
+.Pa ~/.hamssh/id_dsa ,
+.Pa ~/.hamssh/id_ecdsa ,
+.Pa ~/.hamssh/id_ecdsa_sk ,
+.Pa ~/.hamssh/id_ed25519 ,
+.Pa ~/.hamssh/id_ed25519_sk
 or
-.Pa ~/.ssh/id_rsa .
+.Pa ~/.hamssh/id_rsa .
 Additionally, the system administrator may use this to generate host keys,
 as seen in
 .Pa /etc/rc .
@@ -362,9 +362,9 @@ This replaces all hostnames and addresses with hashed representations
 within the specified file; the original content is moved to a file with
 a .old suffix.
 These hashes may be used normally by
-.Nm ssh
+.Nm hamssh
 and
-.Nm sshd ,
+.Nm hamsshd ,
 but they do not reveal identifying information should the file's contents
 be disclosed.
 This option will not modify existing hashed hostnames and is therefore safe
@@ -436,7 +436,7 @@ Screen candidate parameters for Diffie-Hellman Group Exchange.
 This will accept a list of candidate numbers and test that they are
 safe (Sophie Germain) primes with acceptable group generators.
 The results of this operation may be added to the
-.Pa /etc/moduli
+.Pa /etc/hammoduli
 file.
 See the
 .Sx MODULI GENERATION
@@ -551,7 +551,7 @@ If the
 option is also specified then the contents of the KRL will be printed.
 .It Fl q
 Silence
-.Nm ssh-keygen .
+.Nm hamssh-keygen .
 .It Fl R Ar hostname | [hostname]:port
 Removes all keys belonging to the specified
 .Ar hostname
@@ -593,7 +593,7 @@ or
 This flag may also be used to specify the desired signature type when
 signing certificates using an RSA CA key.
 The available RSA signature variants are
-.Dq ssh-rsa
+.Dq hamssh-rsa
 (SHA1 signatures, not recommended),
 .Dq rsa-sha2-256 ,
 and
@@ -605,7 +605,7 @@ When used in combination with
 or
 .Fl Y Cm sign ,
 this option indicates that a CA key resides in a
-.Xr ssh-agent 1 .
+.Xr hamssh-agent 1 .
 See the
 .Sx CERTIFICATES
 section for more information.
@@ -636,7 +636,7 @@ A date or time in the UTC time zone as YYYYMMDDZ or YYYYMMDDHHMM[SS]Z.
 A relative time before the current system time consisting of a minus sign
 followed by an interval in the format described in the
 TIME FORMATS section of
-.Xr sshd_config 5 .
+.Xr hamsshd_config 5 .
 .It
 A raw seconds since epoch (Jan 1 1970 00:00:00 UTC) as a hexadecimal
 number beginning with
@@ -658,7 +658,7 @@ A date or time in the UTC time zone as YYYYMMDDZ or YYYYMMDDHHMM[SS]Z.
 A relative time after the current system time consisting of a plus sign
 followed by an interval in the format described in the
 TIME FORMATS section of
-.Xr sshd_config 5 .
+.Xr hamsshd_config 5 .
 .It
 A raw seconds since epoch (Jan 1 1970 00:00:00 UTC) as a hexadecimal
 number beginning with
@@ -749,7 +749,7 @@ The key used for signing is specified using the
 .Fl f
 option and may refer to either a private key, or a public key with the private
 half available via
-.Xr ssh-agent 1 .
+.Xr hamssh-agent 1 .
 An additional signature namespace, used to prevent signature confusion across
 different domains of use (e.g. file signing vs email signing) must be provided
 via the
@@ -795,7 +795,7 @@ OpenSSH format file and print an OpenSSH public key to stdout.
 Specifies the cipher to use for encryption when writing an OpenSSH-format
 private key file.
 The list of available ciphers may be obtained using
-.Qq ssh -Q cipher .
+.Qq hamssh -Q cipher .
 The default is
 .Dq aes256-ctr .
 .It Fl z Ar serial_number
@@ -830,7 +830,7 @@ The desired length of the primes may be specified by the
 option.
 For example:
 .Pp
-.Dl # ssh-keygen -M generate -O bits=2048 moduli-2048.candidates
+.Dl # hamssh-keygen -M generate -O bits=2048 moduli-2048.candidates
 .Pp
 By default, the search for primes begins at a random point in the
 desired length range.
@@ -850,7 +850,7 @@ will read candidates from standard input (or a file specified using the
 option).
 For example:
 .Pp
-.Dl # ssh-keygen -M screen -f moduli-2048.candidates moduli-2048
+.Dl # hamssh-keygen -M screen -f moduli-2048.candidates moduli-2048
 .Pp
 By default, each candidate will be subjected to 100 primality tests.
 This may be overridden using the
@@ -864,7 +864,7 @@ option.
 Valid generator values are 2, 3, and 5.
 .Pp
 Screened DH groups may be installed in
-.Pa /etc/moduli .
+.Pa /etc/hammoduli .
 It is important that this file contains moduli of a range of bit lengths.
 .Pp
 A number of options are available for moduli generation and screening via the
@@ -909,7 +909,7 @@ User certificates authenticate users to servers, whereas host certificates
 authenticate server hosts to users.
 To generate a user certificate:
 .Pp
-.Dl $ ssh-keygen -s /path/to/ca_key -I key_id /path/to/user_key.pub
+.Dl $ hamssh-keygen -s /path/to/ca_key -I key_id /path/to/user_key.pub
 .Pp
 The resultant certificate will be placed in
 .Pa /path/to/user_key-cert.pub .
@@ -917,7 +917,7 @@ A host certificate requires the
 .Fl h
 option:
 .Pp
-.Dl $ ssh-keygen -s /path/to/ca_key -I key_id -h /path/to/host_key.pub
+.Dl $ hamssh-keygen -s /path/to/ca_key -I key_id -h /path/to/host_key.pub
 .Pp
 The host certificate will be output to
 .Pa /path/to/host_key-cert.pub .
@@ -929,15 +929,15 @@ and identifying the CA key by providing its public half as an argument
 to
 .Fl s :
 .Pp
-.Dl $ ssh-keygen -s ca_key.pub -D libpkcs11.so -I key_id user_key.pub
+.Dl $ hamssh-keygen -s ca_key.pub -D libpkcs11.so -I key_id user_key.pub
 .Pp
 Similarly, it is possible for the CA key to be hosted in a
-.Xr ssh-agent 1 .
+.Xr hamssh-agent 1 .
 This is indicated by the
 .Fl U
 flag and, again, the CA key must be identified by its public half.
 .Pp
-.Dl $ ssh-keygen -Us ca_key.pub -I key_id user_key.pub
+.Dl $ hamssh-keygen -Us ca_key.pub -I key_id user_key.pub
 .Pp
 In all cases,
 .Ar key_id
@@ -949,8 +949,8 @@ names.
 By default, generated certificates are valid for all users or hosts.
 To generate a certificate for a specified set of principals:
 .Pp
-.Dl $ ssh-keygen -s ca_key -I key_id -n user1,user2 user_key.pub
-.Dl "$ ssh-keygen -s ca_key -I key_id -h -n host.domain host_key.pub"
+.Dl $ hamssh-keygen -s ca_key -I key_id -n user1,user2 user_key.pub
+.Dl "$ hamssh-keygen -s ca_key -I key_id -h -n host.domain host_key.pub"
 .Pp
 Additional limitations on the validity and use of user certificates may
 be specified through certificate options.
@@ -989,7 +989,7 @@ the certificate is used for authentication.
 .Pp
 .It Ic no-agent-forwarding
 Disable
-.Xr ssh-agent 1
+.Xr hamssh-agent 1
 forwarding (permitted by default).
 .Pp
 .It Ic no-port-forwarding
@@ -1000,9 +1000,9 @@ Disable PTY allocation (permitted by default).
 .Pp
 .It Ic no-user-rc
 Disable execution of
-.Pa ~/.ssh/rc
+.Pa ~/.hamssh/rc
 by
-.Xr sshd 8
+.Xr hamsshd 8
 (permitted by default).
 .Pp
 .It Ic no-x11-forwarding
@@ -1010,7 +1010,7 @@ Disable X11 forwarding (permitted by default).
 .Pp
 .It Ic permit-agent-forwarding
 Allows
-.Xr ssh-agent 1
+.Xr hamssh-agent 1
 forwarding.
 .Pp
 .It Ic permit-port-forwarding
@@ -1021,9 +1021,9 @@ Allows PTY allocation.
 .Pp
 .It Ic permit-user-rc
 Allows execution of
-.Pa ~/.ssh/rc
+.Pa ~/.hamssh/rc
 by
-.Xr sshd 8 .
+.Xr hamsshd 8 .
 .Pp
 .It Ic permit-X11-forwarding
 Allows X11 forwarding.
@@ -1068,9 +1068,9 @@ Epoch to the distant future.
 .Pp
 For certificates to be used for user or host authentication, the CA
 public key must be trusted by
-.Xr sshd 8
+.Xr hamsshd 8
 or
-.Xr ssh 1 .
+.Xr hamssh 1 .
 Refer to those manual pages for details.
 .Sh FIDO AUTHENTICATOR
 .Nm
@@ -1094,10 +1094,10 @@ The options that are valid for FIDO keys are:
 .Bl -tag -width Ds
 .It Cm application
 Override the default FIDO application/origin string of
-.Dq ssh: .
+.Dq hamssh: .
 This may be useful when generating host or domain-specific resident keys.
 The specified application string must begin with
-.Dq ssh: .
+.Dq hamssh: .
 .It Cm challenge Ns = Ns Ar path
 Specifies a path to a challenge string that will be passed to the
 FIDO authenticator during key generation.
@@ -1112,7 +1112,7 @@ device to use, rather than letting the authenticator middleware select one.
 Indicate that the generated private key should not require touch
 events (user presence) when making signatures.
 Note that
-.Xr sshd 8
+.Xr hamsshd 8
 will refuse such signatures by default, unless overridden via
 an authorized_keys option.
 .It Cm resident
@@ -1122,7 +1122,7 @@ This makes it easier to use the authenticator on multiple computers.
 Resident keys may be supported on FIDO2 authenticators and typically
 require that a PIN be set on the authenticator prior to generation.
 Resident keys may be loaded off the authenticator using
-.Xr ssh-add 1 .
+.Xr hamssh-add 1 .
 Storing both parts of a key on a FIDO authenticator increases the likelihood
 of an attacker being able to use a stolen authenticator device.
 .It Cm user
@@ -1196,7 +1196,7 @@ KRLs that revoke keys by SHA256 hash are not supported by OpenSSH versions
 prior to 7.9.
 .It Cm hash : Ar fingerprint
 Revokes a key using a fingerprint hash, as obtained from a
-.Xr sshd 8
+.Xr hamsshd 8
 authentication log message or the
 .Nm
 .Fl l
@@ -1229,7 +1229,7 @@ uses a simple list of identities and keys to determine whether a signature
 comes from an authorized source.
 This "allowed signers" file uses a format patterned after the
 AUTHORIZED_KEYS FILE FORMAT described in
-.Xr sshd 8 .
+.Xr hamsshd 8 .
 Each line of the file contains the following space-separated fields:
 principals, options, keytype, base64-encoded key.
 Empty lines and lines starting with a
@@ -1237,7 +1237,7 @@ Empty lines and lines starting with a
 are ignored as comments.
 .Pp
 The principals field is a pattern-list (see PATTERNS in
-.Xr ssh_config 5 )
+.Xr hamssh_config 5 )
 consisting of one or more comma-separated USER@DOMAIN identity patterns
 that are accepted for signing.
 When verifying, the identity presented via the
@@ -1290,12 +1290,12 @@ the built-in USB HID support.
 .El
 .Sh FILES
 .Bl -tag -width Ds -compact
-.It Pa ~/.ssh/id_dsa
-.It Pa ~/.ssh/id_ecdsa
-.It Pa ~/.ssh/id_ecdsa_sk
-.It Pa ~/.ssh/id_ed25519
-.It Pa ~/.ssh/id_ed25519_sk
-.It Pa ~/.ssh/id_rsa
+.It Pa ~/.hamssh/id_dsa
+.It Pa ~/.hamssh/id_ecdsa
+.It Pa ~/.hamssh/id_ecdsa_sk
+.It Pa ~/.hamssh/id_ed25519
+.It Pa ~/.hamssh/id_ed25519_sk
+.It Pa ~/.hamssh/id_rsa
 Contains the DSA, ECDSA, authenticator-hosted ECDSA, Ed25519,
 authenticator-hosted Ed25519 or RSA authentication identity of the user.
 This file should not be readable by anyone but the user.
@@ -1305,34 +1305,34 @@ used to encrypt the private part of this file using 128-bit AES.
 This file is not automatically accessed by
 .Nm
 but it is offered as the default file for the private key.
-.Xr ssh 1
+.Xr hamssh 1
 will read this file when a login attempt is made.
 .Pp
-.It Pa ~/.ssh/id_dsa.pub
-.It Pa ~/.ssh/id_ecdsa.pub
-.It Pa ~/.ssh/id_ecdsa_sk.pub
-.It Pa ~/.ssh/id_ed25519.pub
-.It Pa ~/.ssh/id_ed25519_sk.pub
-.It Pa ~/.ssh/id_rsa.pub
+.It Pa ~/.hamssh/id_dsa.pub
+.It Pa ~/.hamssh/id_ecdsa.pub
+.It Pa ~/.hamssh/id_ecdsa_sk.pub
+.It Pa ~/.hamssh/id_ed25519.pub
+.It Pa ~/.hamssh/id_ed25519_sk.pub
+.It Pa ~/.hamssh/id_rsa.pub
 Contains the DSA, ECDSA, authenticator-hosted ECDSA, Ed25519,
 authenticator-hosted Ed25519 or RSA public key for authentication.
 The contents of this file should be added to
-.Pa ~/.ssh/authorized_keys
+.Pa ~/.hamssh/authorized_keys
 on all machines
 where the user wishes to log in using public key authentication.
 There is no need to keep the contents of this file secret.
 .Pp
-.It Pa /etc/moduli
+.It Pa /etc/hammoduli
 Contains Diffie-Hellman groups used for DH-GEX.
 The file format is described in
 .Xr moduli 5 .
 .El
 .Sh SEE ALSO
-.Xr ssh 1 ,
-.Xr ssh-add 1 ,
-.Xr ssh-agent 1 ,
+.Xr hamssh 1 ,
+.Xr hamssh-add 1 ,
+.Xr hamssh-agent 1 ,
 .Xr moduli 5 ,
-.Xr sshd 8
+.Xr hamsshd 8
 .Rs
 .%R RFC 4716
 .%T "The Secure Shell (SSH) Public Key File Format"
