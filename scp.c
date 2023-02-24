@@ -1016,7 +1016,7 @@ do_sftp_connect(char *host, char *user, int port, char *sftp_direct,
 
 	} else {
 		freeargs(&args);
-		addargs(&args, "sftp-server");
+		addargs(&args, "hamsftp-server");
 		if (do_cmd(sftp_direct, host, NULL, -1, 0, "sftp",
 		    reminp, remoutp, pidp) < 0)
 			return NULL;
